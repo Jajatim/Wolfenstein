@@ -1,10 +1,10 @@
 #include "menu.h"
 
-int menu()
+int menu(game g)
 {
-    /*
-	t_menu m;
+	menu m;
 
+    /*
 	m_init(g, &m);
 
 	while (g->g_state != EXIT)
@@ -21,6 +21,7 @@ int menu()
 		SDL_Delay(1);
 	}
 	//m_free(m);
-	return (1);
     */
+
+	return 1;
 }
