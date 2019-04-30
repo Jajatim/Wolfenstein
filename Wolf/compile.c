@@ -27,10 +27,11 @@
 #endif
 
 
-#define CC "gcc " //dont forget the trailing space if using another
+#define CC "gcc "
 #define SRC_PATH "./src_list.txt"
-#define WIN_LIB "-L lib -lmingw32 -lSDL2main -lSDL2.dll"
-#define OSX_LIB "-F . -framework SDL2 -rpath ."
+#define WIN_LIB "-L lib -lmingw32 -lSDL2main -lSDL2.dll" //Todo, not sure what to add...
+#define OSX_LIB "-F . -framework SDL2 -rpath ." //Paths needs to be updated
+#define LIN_LIB "" //Todo
 
 int main() {
     //Main string, start as "gcc "
@@ -81,8 +82,7 @@ int main() {
             strcat(scompil, OSX_LIB);
             break;
         case LIN_TARGET:
-            printf("Linux not done yet\n");
-            exit(1);
+            strcat(scompil, LIN_LIB);
             break;
     }
 
