@@ -1,7 +1,7 @@
 #ifndef MENU_H_INCLUDED
 #define MENU_H_INCLUDED
 
-#include "generic.h"
+#include "../generic.h"
 
 typedef struct menu {
     int test;

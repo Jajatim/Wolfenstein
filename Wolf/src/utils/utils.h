@@ -1,7 +1,7 @@
 #ifndef UTILS_H_INCLUDED
 #define UTILS_H_INCLUDED
 
-#include "generic.h"
+#include "../generic.h"
 
 /*
 Returns the time spent since the last call.
