@@ -1,3 +1,0 @@
-test.c
-src/test.c
-src/folder/example.c
