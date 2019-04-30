@@ -6,10 +6,23 @@
 /* ***** INCLUDES *********************************** */
 #include <stdio.h>
 #include <stdlib.h>
-//include SDL2 ?
+#include <stdint.h>
+#include <stdbool.h>
+#ifdef __linux__
+#include <SDL2/SDL.h>
+#endif
 
 
 /* ***** STRUCTS *********************************** */
+typedef struct game {
+    SDL_Window *window;
+    SDL_Renderer *renderer;
+    uint16_t screenSizeWidth;
+    uint16_t screenSizeHeight;
+    uint8_t status;
+} game;
+//
+
 //SDL data (window, renderer, etc...)
 //Generic data (Keyboard, mouse, etc...)
 
