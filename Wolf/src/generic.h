@@ -8,17 +8,16 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include <SDL2/SDL.h>
-
+//#include <SDL2/SDL.h>
 
 /* ***** STRUCTS *********************************** */
-typedef struct game {
+/*typedef struct game {
     SDL_Window *window;
     SDL_Renderer *renderer;
     uint16_t screenSizeWidth;
     uint16_t screenSizeHeight;
     uint8_t status;
-} game;
+} game;*/
 //
 
 //SDL data (window, renderer, etc...)

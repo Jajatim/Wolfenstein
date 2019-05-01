@@ -54,6 +54,7 @@ int menu(game *g)
 }
 */
 
+/*
 static void g_free(game *g)
 {
 	if (g->window != NULL){
@@ -66,7 +67,9 @@ static void g_free(game *g)
 		g->renderer = NULL;
 	}
 }
+*/
 
+/*
 static int g_init(game *g)
 {
 	g->window = SDL_CreateWindow(WIN_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCR_W, SCR_H, SDL_WINDOW_SHOWN);
@@ -88,13 +91,19 @@ static int g_init(game *g)
 	g->status = LOADING;
 	return 0;
 }
+*/
 
-int main()
+int main(int argc, char **argv)
 {
+	argv[0][0] += argc * 0;
+	printf("Yolo");
+	/*
 	game g;
 
 	if (g_init(&g))
 		; //TODO : err
 	menu(&g);
 	g_free(&g);
+	*/
+	return EXIT_SUCCESS;
 }
