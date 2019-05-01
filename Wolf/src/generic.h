@@ -8,9 +8,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
-#ifdef __linux__
 #include <SDL2/SDL.h>
-#endif
 
 
 /* ***** STRUCTS *********************************** */
