@@ -8,7 +8,8 @@ CFLAGS = -Wall -Wextra
 
 # SOURCES
 SRCDIR =	$(wildcard src/*.c) \
-			$(wildcard src/game/*.c)
+			$(wildcard src/game/*.c) \
+			$(wildcard src/menu/*.c)
 #vpath=../src:../src/game
 SRC = main.c test.c
 
@@ -16,6 +17,7 @@ SRC = main.c test.c
 #OBJDIR = src/tmp/
 #OBJ = $(addprefix $(OBJDIR), $(SRC:.c=.o))
 OBJ = $(SRCDIR:.c=.o)
+
 
 # OS DEPENDANT VARIABLES
 # LINUX
@@ -27,16 +29,17 @@ DEL = rm -f
 FixPath = $1
 
 # APPLE 
-else ifeq ($(OS),Apple)
+else ifeq ($(shell uname -s),Darwin)
 $(info Compiling for Apple.)
 #EXT =
 SEP = /
 DEL = rm -f
 FixPath = $1
+LIB = -F . -framework SDL2 -rpath .
 
 # WINDOWS
 else ifeq ($(OS),Windows_NT)
-$(info Compiling for Windows.)
+$(info Os : |$(OS)|, System : |$(shell uname -s)|. Compiling for Windows.)
 EXT = .exe
 SEP = $(strip \)
 #SEP = /
@@ -45,7 +48,7 @@ FixPath = $(subst /,\,$1)
 
 # OS NOT FOUND 
 else
-$(info No know OS found.)
+$(info Your OS |$(OS)| or your shell name |$(shell uname -s)| is not listed on this Makefile. Aborting.)
 err:
 	exit
 endif
@@ -57,7 +60,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(info Compiling $@...)
-	$(CC) $(call FixPath, $(OBJ)) -o $(call FixPath, $@)
+	$(CC) $(call FixPath, $(OBJ)) -o $(call FixPath, $@) $(LIB)
 
 %.o: %.c
 #	$(info Compiling $< into $@)

@@ -8,24 +8,56 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
-//#include <SDL2/SDL.h>
+
+#include "../resources/SDL2/SDL.h"
+//Add if else for linux users so it adds : #include <SDL2/SDL.h> instead
+
+
+/* ***** DEFINES *********************************** */
+#define WIN_NAME "Wolfenstein"
+
 
 /* ***** STRUCTS *********************************** */
-/*typedef struct game {
-    SDL_Window *window;
-    SDL_Renderer *renderer;
-    uint16_t screenSizeWidth;
-    uint16_t screenSizeHeight;
-    uint8_t status;
-} game;*/
-//
+typedef struct mouse {
+	int x;
+	int y;
+	int leftBtn;
+	int rightBtn;
+} mouse;
 
-//SDL data (window, renderer, etc...)
-//Generic data (Keyboard, mouse, etc...)
+typedef struct keyboard {
+	int w;
+	int a;
+	int s;
+	int d;
+	int q;
+	int e;
+} keyboard;
+
+typedef struct game {
+	/* SDL & Window infos */
+    SDL_Window *win;
+    SDL_Renderer *ren;
+    uint16_t screenW;
+    uint16_t screenH;
+
+	/* Game general infos */
+    uint8_t status;
+
+	/* User input */
+	keyboard kbd;
+	mouse mse;
+} game;
 
 
 /* ***** ENUMS *********************************** */
-//Game state ? (e.g. INIT, MAIN_MENU, GAME, INGAME_MENU, etc...)
+enum game_state {
+	INIT,
+	MAIN_MENU,
+	PLAY,
+	PLAY_MENU,
+	EXIT
+};
 
 
 /* ***** GLOBALS *********************************** */
