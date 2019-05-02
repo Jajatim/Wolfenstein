@@ -93,10 +93,13 @@ static int g_init(game *g)
 }
 */
 
+int test();
+
 int main(int argc, char **argv)
 {
 	argv[0][0] += argc * 0;
-	printf("Yolo");
+	printf("Printing main\n");
+	test();
 	/*
 	game g;
 

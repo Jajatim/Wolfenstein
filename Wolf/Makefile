@@ -7,12 +7,15 @@ CFLAGS = -Wall -Wextra
 #INC = resources$(SEP)
 
 # SOURCES
-SRCDIR = src$(SEP)
-SRC = main.c 
+SRCDIR =	$(wildcard src/*.c) \
+			$(wildcard src/game/*.c)
+#vpath=../src:../src/game
+SRC = main.c test.c
 
 # OBJECTS
-OBJDIR = src$(SEP)tmp$(SEP)
-OBJ = $(SRC:.c=.o)
+#OBJDIR = src/tmp/
+#OBJ = $(addprefix $(OBJDIR), $(SRC:.c=.o))
+OBJ = $(SRCDIR:.c=.o)
 
 # OS DEPENDANT VARIABLES
 # LINUX
@@ -21,6 +24,7 @@ $(info Compiling for Linux.)
 #EXT =
 SEP = /
 DEL = rm -f
+FixPath = $1
 
 # APPLE 
 else ifeq ($(OS),Apple)
@@ -28,6 +32,7 @@ $(info Compiling for Apple.)
 #EXT =
 SEP = /
 DEL = rm -f
+FixPath = $1
 
 # WINDOWS
 else ifeq ($(OS),Windows_NT)
@@ -36,6 +41,7 @@ EXT = .exe
 SEP = $(strip \)
 #SEP = /
 DEL = del /q
+FixPath = $(subst /,\,$1)
 
 # OS NOT FOUND 
 else
@@ -45,18 +51,20 @@ err:
 endif
 
 
+
 # RULES
 all: $(NAME)
 
-$(NAME): $(OBJDIR)$(OBJ)
-	$(CC) $(OBJDIR)$(OBJ) -o $(NAME)
+$(NAME): $(OBJ)
+	$(info Compiling $@...)
+	$(CC) $(call FixPath, $(OBJ)) -o $(call FixPath, $@)
 
-$(OBJDIR)$(OBJ): $(SRCDIR)$(SRC)
-	$(info Compiling $< into $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+%.o: %.c
+#	$(info Compiling $< into $@)
+	$(CC) $(CFLAGS) -c $(call FixPath, $<) -o $(call FixPath, $@)
 
 clean:
-	$(DEL) $(OBJDIR)$(OBJ)
+	$(DEL) $(call FixPath, $(OBJ))
 
 fclean: clean
 	$(DEL) $(NAME)
