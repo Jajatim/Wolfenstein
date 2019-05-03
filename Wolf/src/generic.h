@@ -48,6 +48,9 @@ typedef struct game {
 	/* User input */
 	keyboard kbd;
 	mouse mse;
+
+	/* Error management */
+	int err;
 } game;
 
 
