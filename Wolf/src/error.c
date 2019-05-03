@@ -3,7 +3,9 @@
 const char *getErrorName(error_t error)
 {
     const char *errorNames[] = {
-        "SDL initalisation failed !" // ERROR_SDL_INIT_FAILURE
+        "SDL initalisation failed !", // ERROR_SDL_INIT_FAILURE
+        "Window initalisation failed !", // ERROR_WINDOW_INIT_FAILURE
+        "Renderer initalisation failed !" // ERROR_RENDERER_INIT_FAILURE
     };
     if (error.errorCode < COUNT_OF(errorNames)) {
         return errorNames[error.errorCode];
@@ -16,7 +18,9 @@ const char *getErrorName(error_t error)
 const char *getErrorDescription(error_t error)
 {
     static const char *errorDescriptions[] = {
-        "error while initializing SDL" // ERROR_SDL_INIT_FAILURE
+        "error while initializing SDL", // ERROR_SDL_INIT_FAILURE
+        "error when creating the window !", // ERROR_WINDOW_INIT_FAILURE
+        "error when creating the renderer !" // ERROR_RENDERER_INIT_FAILURE
     };
     if (error.errorCode < COUNT_OF(errorDescriptions)) {
         return errorDescriptions[error.errorCode];
