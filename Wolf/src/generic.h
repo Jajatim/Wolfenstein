@@ -13,10 +13,11 @@
 #include "../resources/SDL2/SDL.h"
 //Add if else for linux users so it adds : #include <SDL2/SDL.h> instead
 
-
 /* ***** DEFINES *********************************** */
 #define WIN_NAME "Wolfenstein"
 #define M_RENDER_TIMER 33
+
+#define COUNT_OF(ptr) (sizeof(ptr)/sizeof(ptr[0]))
 
 
 /* ***** STRUCTS *********************************** */
@@ -76,10 +77,11 @@ enum enum_error {
 	ERROR_SDL_INIT_FAILURE,
 	ERROR_WINDOW_INIT_FAILURE,
 	ERROR_RENDERER_INIT_FAILURE
-}
+};
 
 /* ***** GLOBALS *********************************** */
 //None needed yet, maybe some kind of errno will be needed later
 
+#include "main.h" // I put it here because otherwise he tells me he does not know game
 
 #endif //GENERIC_H_INCLUDED
