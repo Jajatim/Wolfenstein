@@ -4,7 +4,8 @@
 #include "../generic.h"
 
 typedef struct menu {
-    int test;
+	uint32_t deltaTime;
+    uint32_t renderTimer;
 } menu;
 
 int menu_loop(game *g);

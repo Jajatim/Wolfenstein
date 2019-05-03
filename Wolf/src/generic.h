@@ -15,6 +15,7 @@
 
 /* ***** DEFINES *********************************** */
 #define WIN_NAME "Wolfenstein"
+#define M_RENDER_TIMER 33
 
 
 /* ***** STRUCTS *********************************** */

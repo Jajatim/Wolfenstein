@@ -6,7 +6,7 @@
 /*   By: sifouche <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/18 13:51:24 by sifouche     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/03 14:18:14 by sifouche    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/03 15:25:29 by sifouche    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,7 +16,7 @@
 
 
 
-static void g_free(game *g)
+static void g_exit(game *g)
 {
 	//Freeing the SDL window
 	if (g->win != NULL){
