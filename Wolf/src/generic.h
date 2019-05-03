@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "../resources/SDL2/SDL.h"
 //Add if else for linux users so it adds : #include <SDL2/SDL.h> instead
@@ -19,6 +20,14 @@
 
 
 /* ***** STRUCTS *********************************** */
+
+typedef struct error {
+	uint8_t errorCode;
+    char *name;
+    char *description;
+    _Bool isFatal;
+} error_t;
+
 typedef struct mouse {
 	int x;
 	int y;
@@ -50,7 +59,7 @@ typedef struct game {
 	mouse mse;
 
 	/* Error management */
-	uint8_t err;
+	error_t err;
 } game;
 
 
@@ -63,6 +72,11 @@ enum game_state {
 	EXIT
 };
 
+enum enum_error {
+	ERROR_SDL_INIT_FAILURE,
+	ERROR_WINDOW_INIT_FAILURE,
+	ERROR_RENDERER_INIT_FAILURE
+}
 
 /* ***** GLOBALS *********************************** */
 //None needed yet, maybe some kind of errno will be needed later
