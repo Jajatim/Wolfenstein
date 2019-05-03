@@ -49,7 +49,7 @@ typedef struct game {
 	keyboard kbd;
 	mouse mse;
 
-	/* Err management */
+	/* Error management */
 	int err;
 } game;
 
