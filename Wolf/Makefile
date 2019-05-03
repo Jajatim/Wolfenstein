@@ -22,12 +22,13 @@ OBJ = $(SRCDIR:.c=.o)
 
 # OS DEPENDANT VARIABLES
 # LINUX
-ifeq ($(OS),Linux)
+ifeq ($(shell uname -s),Linux)
 $(info Compiling for Linux.)
 #EXT =
 SEP = /
 DEL = rm -f
 FixPath = $1
+LIB = `sdl2-config --cflags --static-libs`
 
 # APPLE 
 else ifeq ($(shell uname -s),Darwin)
