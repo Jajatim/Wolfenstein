@@ -46,7 +46,7 @@ static int g_init(game *g)
 	g->ren = NULL;
 
 	//General Init SDL
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0 || 1) {
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0) {
 		fprintf(stderr, "SDL initialisation failed: %s\n",SDL_GetError());
 		g->err.errorCode = ERROR_SDL_INIT_FAILURE;
 		g->err.isFatal = true;
