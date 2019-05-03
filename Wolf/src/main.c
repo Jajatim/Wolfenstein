@@ -16,7 +16,7 @@
 
 
 
-static void g_exit(game *g)
+void g_exit(game *g)
 {
 	//Freeing the SDL window
 	if (g->win != NULL){
@@ -46,15 +46,21 @@ static int g_init(game *g)
 	g->ren = NULL;
 
 	//General Init SDL
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0 ) {
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0 || 1) {
 		fprintf(stderr, "SDL initialisation failed: %s\n",SDL_GetError());
-		exit(EXIT_FAILURE);
+		g->err.errorCode = ERROR_SDL_INIT_FAILURE;
+		g->err.isFatal = true;
+		onError(g);
+		return 1;
 	}
 
 	//Creating the SDL window
 	g->win = SDL_CreateWindow(WIN_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, g->screenW, g->screenH, SDL_WINDOW_SHOWN);
 	if (!g->win) {
 		fprintf(stderr, "Window creation failed: %s\n",SDL_GetError());
+		g->err.errorCode = ERROR_WINDOW_INIT_FAILURE;
+		g->err.isFatal = true;
+		onError(g);
 		return 1;
 	}
 
@@ -62,6 +68,9 @@ static int g_init(game *g)
 	g->ren = SDL_CreateRenderer(g->win, -1, 0);
 	if (!g->ren) {
 		fprintf(stderr, "Renderer creation failed: %s\n",SDL_GetError());
+		g->err.errorCode = ERROR_RENDERER_INIT_FAILURE;
+		g->err.isFatal = true;
+		onError(g);
 		return 1;
 	}
 
@@ -74,7 +83,7 @@ int main(int argc, char **argv)
 {
 	argv[0][0] += argc * 0; //Making the compiler happy.
 
-	game g;
+	game g = {};
 
 	if (g_init(&g))
 		fprintf(stderr, "Error at init\n"); //TODO : gestion err
