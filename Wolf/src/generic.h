@@ -22,17 +22,17 @@
 typedef struct mouse {
 	int x;
 	int y;
-	int leftBtn;
-	int rightBtn;
+	_Bool leftBtn;
+	_Bool rightBtn;
 } mouse;
 
 typedef struct keyboard {
-	int w;
-	int a;
-	int s;
-	int d;
-	int q;
-	int e;
+	_Bool w;
+	_Bool a;
+	_Bool s;
+	_Bool d;
+	_Bool q;
+	_Bool e;
 } keyboard;
 
 typedef struct game {
@@ -50,7 +50,7 @@ typedef struct game {
 	mouse mse;
 
 	/* Error management */
-	int err;
+	uint8_t err;
 } game;
 
 
