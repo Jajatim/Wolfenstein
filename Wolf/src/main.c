@@ -49,6 +49,7 @@ static int g_init(game *g)
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0) {
 		fprintf(stderr, "SDL initialisation failed: %s\n",SDL_GetError());
 		g->err.errorCode = ERROR_SDL_INIT_FAILURE;
+		g->err.type = ERROR_TYPE_SDL;
 		g->err.isFatal = true;
 		onError(g);
 		return 1;
@@ -59,6 +60,7 @@ static int g_init(game *g)
 	if (!g->win) {
 		fprintf(stderr, "Window creation failed: %s\n",SDL_GetError());
 		g->err.errorCode = ERROR_WINDOW_INIT_FAILURE;
+		g->err.type = ERROR_TYPE_SDL;
 		g->err.isFatal = true;
 		onError(g);
 		return 1;
@@ -69,6 +71,7 @@ static int g_init(game *g)
 	if (!g->ren) {
 		fprintf(stderr, "Renderer creation failed: %s\n",SDL_GetError());
 		g->err.errorCode = ERROR_RENDERER_INIT_FAILURE;
+		g->err.type = ERROR_TYPE_SDL;
 		g->err.isFatal = true;
 		onError(g);
 		return 1;

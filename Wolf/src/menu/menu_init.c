@@ -17,7 +17,10 @@ int m_init(game *g, menu *m)
 	//Loading the assets texture
 	SDL_Surface *tmp = SDL_LoadBMP(MENU_ASSETS_PATH);
 	if (tmp == NULL) {
-		fprintf(stderr, "Failed to load menu assets: %s", SDL_GetError());
+		g->err.errorCode = ERROR_LOADBMP_FAILURE;
+		g->err.type = ERROR_TYPE_SDL;
+		g->err.isFatal = true;
+		onError(g);
 		return 0;
 	}
 	m->menuAssets = SDL_CreateTextureFromSurface(g->ren, tmp);

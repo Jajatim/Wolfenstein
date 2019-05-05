@@ -27,6 +27,7 @@ typedef struct error {
     char *name;
     char *description;
     _Bool isFatal;
+	uint8_t type;
 } error_t;
 
 typedef struct mouse {
@@ -74,9 +75,17 @@ enum game_state {
 };
 
 enum enum_error {
+	ERROR_UNDEFINED,
 	ERROR_SDL_INIT_FAILURE,
 	ERROR_WINDOW_INIT_FAILURE,
-	ERROR_RENDERER_INIT_FAILURE
+	ERROR_RENDERER_INIT_FAILURE,
+	ERROR_LOADBMP_FAILURE
+};
+
+enum enum_error_type {
+	ERROR_TYPE_GAME,
+	ERROR_TYPE_SDL,
+	ERROR_TYPE_ERRNO
 };
 
 /* ***** GLOBALS *********************************** */
