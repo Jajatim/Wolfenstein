@@ -42,14 +42,14 @@ int m_init(game *g, menu *m)
 		.h = MENU_BTN_H
 	};
 	currentY += MENU_BTN_H;
-	m->btn_play = (SDL_Rect) {
+	m->btn_opt = (SDL_Rect) {
 		.x = 0,
 		.y = currentY,
 		.w=MENU_BTN_W,
 		.h=MENU_BTN_H
 	};
 	currentY += MENU_BTN_H;
-	m->btn_play = (SDL_Rect) {
+	m->btn_exit = (SDL_Rect) {
 		.x = 0,
 		.y = currentY,
 		.w = MENU_BTN_W,

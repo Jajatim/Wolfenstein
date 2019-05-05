@@ -12,8 +12,11 @@ typedef struct menu {
     uint32_t renderTimer;
 	SDL_Texture *menuAssets;
 	SDL_Rect btn_play;
+	//SDL_Rect btn_play_hover;
 	SDL_Rect btn_opt;
+	//SDL_Rect btn_opt_hover;
 	SDL_Rect btn_exit;
+	//SDL_Rect btn_exit_hover;
 } menu;
 
 int menu_loop(game *g);
