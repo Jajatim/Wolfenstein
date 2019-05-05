@@ -34,6 +34,14 @@ const char *getErrorDescription(error_t error)
     
 }
 
+void freeError(game *g)
+{
+    if(g->err.description != NULL)
+        free(g->err.description);
+    if (g->err.name)
+        free(g->err.name);
+}
+
 void onFatalError(game *g)
 {
     g_exit(g);
@@ -43,10 +51,7 @@ void onFatalError(game *g)
 
 void onError(game *g)
 {
-    // TODO : create freeError();
-    if (g->err.description != NULL)
-            free(g->err.description);
-
+    freeError(g);
     if (g->err.type == ERROR_TYPE_GAME){
         if (getErrorDescription(g->err) != NULL)
             g->err.description = calloc(1, strlen(getErrorDescription(g->err))+1);
@@ -59,8 +64,6 @@ void onError(game *g)
     } else if (g->err.type == ERROR_TYPE_ERRNO){
         // TODO : add errno support
     }
-    if (g->err.name != NULL)
-        free(g->err.name);
     if (getErrorName(g->err) != NULL)
         g->err.name = calloc(1, strlen(getErrorName(g->err))+1);
     if (g->err.name)
