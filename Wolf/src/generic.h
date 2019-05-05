@@ -92,7 +92,7 @@ enum enum_error_type {
 /* ***** GLOBALS *********************************** */
 //None needed yet, maybe some kind of errno will be needed later
 
-#include "main.h" // I put it here because otherwise he tells me he does not know game
+//#include "main.h" // I put it here because otherwise he tells me he does not know game
 #include "error.h"
 
 #endif //GENERIC_H_INCLUDED

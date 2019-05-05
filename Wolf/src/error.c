@@ -44,7 +44,7 @@ void freeError(game *g)
 
 void onFatalError(game *g)
 {
-    g_exit(g);
+	(void)g;
     // TODO : Create a dialog box
     exit(EXIT_FAILURE);
 }
