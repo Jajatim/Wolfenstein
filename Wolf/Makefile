@@ -1,10 +1,10 @@
 # GENERIC
-NAME = binaries$(SEP)prog$(EXT)
+NAME = binaries/prog$(EXT)
 CC = gcc
 CFLAGS = -Wall -Wextra
 
 # INCLUDES
-#INC = resources$(SEP)
+#INC = 
 
 # SOURCES
 SRCDIR =	$(wildcard src/*.c) \
@@ -24,8 +24,6 @@ OBJ = $(SRCDIR:.c=.o)
 # LINUX
 ifeq ($(shell uname -s),Linux)
 $(info Compiling for Linux.)
-#EXT =
-SEP = /
 DEL = rm -f
 FixPath = $1
 LIB = `sdl2-config --cflags --static-libs`
@@ -33,20 +31,17 @@ LIB = `sdl2-config --cflags --static-libs`
 # APPLE 
 else ifeq ($(shell uname -s),Darwin)
 $(info Compiling for Apple.)
-#EXT =
-SEP = /
 DEL = rm -f
 FixPath = $1
-LIB = -F . -framework SDL2 -rpath .
+LIB = -framework SDL2
 
 # WINDOWS
 else ifeq ($(OS),Windows_NT)
-$(info Os : |$(OS)|, System : |$(shell uname -s)|. Compiling for Windows.)
+$(info Compiling for Windows.)
 EXT = .exe
-SEP = $(strip \)
-#SEP = /
 DEL = del /q
 FixPath = $(subst /,\,$1)
+#LIB = 
 
 # OS NOT FOUND 
 else
