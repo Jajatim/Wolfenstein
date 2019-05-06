@@ -10,8 +10,10 @@
 #include <stdbool.h>
 #include <string.h>
 #include <math.h>
+#include <assert.h>
 
 #include "../resources/SDL2/SDL.h"
+#include "map.h"
 //Add if else for linux users so it adds : #include <SDL2/SDL.h> instead
 
 /* ***** DEFINES *********************************** */

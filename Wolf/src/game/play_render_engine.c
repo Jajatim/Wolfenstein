@@ -1,20 +1,18 @@
 #include "play.h"
 
-int map[10][10] = {
-	{1,1,1,1,1,1,1,1,1,1},
-	{1,0,0,0,0,1,0,0,0,1},
-	{1,0,0,0,0,1,0,0,0,1},
-	{1,1,0,1,1,1,0,1,1,1},
-	{1,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,1},
-	{1,1,1,1,1,1,1,1,1,1}
-};
-
 int p_engine(game *g, play *p)
 {
+
+	static uint8_t **map = NULL;
+	static map_t *metaMap = NULL;
+
+	if (map == NULL)
+	{
+		metaMap = loadMap("maps/test.map");
+		assert(metaMap != NULL); // TODO : add error
+		map = metaMap->map;
+	}
+
 	for (int x = 0; x < g->screenW; x++)
 	{
 		double cameraX = 2 * x / (double)g->screenW - 1;
