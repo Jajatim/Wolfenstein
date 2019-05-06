@@ -32,6 +32,10 @@ static int g_init(game *g)
 	g->win = NULL;
 	g->ren = NULL;
 
+	//Keyboard & mouse init
+	bzero((void *)&(g->kbd), sizeof(keyboard));
+	bzero((void *)&(g->mse), sizeof(mouse));
+
 	//General Init SDL
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0) {
 		fprintf(stderr, "SDL initialisation failed: %s\n",SDL_GetError());

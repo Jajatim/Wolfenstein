@@ -5,11 +5,9 @@ int m_init(game *g, menu *m)
 {
 	//Init variables
 	m->deltaTime = 0;
+	m->updateTimer = 0;
 	m->renderTimer = 0;
 	m->menuAssets = NULL;
-	//m->btn_play = (SDL_Rect){0, 0, 0, 0};
-	//m->btn_opt = (SDL_Rect){0, 0, 0, 0};
-	//m->btn_exit = (SDL_Rect){0, 0, 0, 0};
 
 	//Init timer (need to init the static var)
 	timer(m->deltaTime);
@@ -35,21 +33,21 @@ int m_init(game *g, menu *m)
 
 	//Loading the buttons from the texture
 	int currentY = 0;
-	m->btn_play = (SDL_Rect) {
+	m->btn_play_src = (SDL_Rect) {
 		.x = 0,
 		.y = currentY,
 		.w = MENU_BTN_W,
 		.h = MENU_BTN_H
 	};
 	currentY += MENU_BTN_H;
-	m->btn_opt = (SDL_Rect) {
+	m->btn_opt_src = (SDL_Rect) {
 		.x = 0,
 		.y = currentY,
-		.w=MENU_BTN_W,
-		.h=MENU_BTN_H
+		.w = MENU_BTN_W,
+		.h = MENU_BTN_H
 	};
 	currentY += MENU_BTN_H;
-	m->btn_exit = (SDL_Rect) {
+	m->btn_exit_src = (SDL_Rect) {
 		.x = 0,
 		.y = currentY,
 		.w = MENU_BTN_W,

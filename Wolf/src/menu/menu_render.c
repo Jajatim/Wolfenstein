@@ -27,17 +27,20 @@ int m_render(game *g, menu *m)
 
 	//Printing btn play
 	dst.y = curY;
-	SDL_RenderCopy(g->ren, m->menuAssets, &(m->btn_play), &dst);
+	m->btn_play_dst = dst;
+	SDL_RenderCopy(g->ren, m->menuAssets, &(m->btn_play_src), &dst);
 	curY += midPadding + dst.h;
 
 	//Printing btn options
 	dst.y = curY;
-	SDL_RenderCopy(g->ren, m->menuAssets, &(m->btn_opt), &dst);
+	m->btn_opt_dst = dst;
+	SDL_RenderCopy(g->ren, m->menuAssets, &(m->btn_opt_src), &dst);
 	curY += midPadding + dst.h;
 
 	//Printing btn exit
 	dst.y = curY;
-	SDL_RenderCopy(g->ren, m->menuAssets, &(m->btn_exit), &dst);
+	m->btn_exit_dst = dst;
+	SDL_RenderCopy(g->ren, m->menuAssets, &(m->btn_exit_src), &dst);
 	curY += midPadding + dst.h;
 
 	//Put Renderer to screen

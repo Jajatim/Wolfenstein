@@ -22,7 +22,7 @@ int m_events(game *g)
 					return (PLAY_MENU);
 			}
 		}
-		
+
 
 		/* KEY RELEASED */
 		else if (e.type == SDL_KEYUP)
@@ -33,13 +33,34 @@ int m_events(game *g)
 
 		/* MOUSE MOTION */
 		else if (e.type == SDL_MOUSEMOTION) {
-			g->mse.x=e.motion.x;
-			g->mse.y=e.motion.y;
+			g->mse.pos.x=e.motion.x;
+			g->mse.pos.y=e.motion.y;
 		}
 
 
 		/* MOUSE CLIC */
+		else if (e.type == SDL_MOUSEBUTTONDOWN) {
+			switch(e.button.button) {
+				case SDL_BUTTON_LEFT:
+					g->mse.leftBtn = 1;
+					break;
+				case SDL_BUTTON_RIGHT:
+					g->mse.rightBtn = 1;
+					break;
+			}
+		}
 
+		/* MOUSE UNCLIC */
+		else if (e.type == SDL_MOUSEBUTTONUP) {
+			switch(e.button.button) {
+				case SDL_BUTTON_LEFT:
+					g->mse.leftBtn = 0;
+					break;
+				case SDL_BUTTON_RIGHT:
+					g->mse.rightBtn = 0;
+					break;
+			}
+		}
 	}
 	return (g->status);
 }

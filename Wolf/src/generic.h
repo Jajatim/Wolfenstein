@@ -15,6 +15,7 @@
 
 /* ***** DEFINES *********************************** */
 #define WIN_NAME "Wolfenstein"
+#define M_UPDATE_TIMER 4
 #define M_RENDER_TIMER 33
 
 #define COUNT_OF(ptr) (sizeof(ptr)/sizeof(ptr[0]))
@@ -30,9 +31,15 @@ typedef struct error {
 	uint8_t type;
 } error_t;
 
-typedef struct mouse {
+typedef struct pos2d {
 	int x;
 	int y;
+} pos2d;
+
+typedef struct mouse {
+	pos2d pos;
+	//int x;
+	//int y;
 	_Bool leftBtn;
 	_Bool rightBtn;
 } mouse;

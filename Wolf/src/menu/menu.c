@@ -15,18 +15,22 @@ int menu_loop(game *g)
 	while (g->status != EXIT)
 	{
 		//debug
-		printf("Menu Loop\nMouseX : %d, MouseY : %d\n", g->mse.x, g->mse.y);
-		printf("Timers : delta %d | render %d\n", m.deltaTime, m.renderTimer);
+		printf("Menu Loop\nMouseX : %d, MouseY : %d\n", g->mse.pos.x, g->mse.pos.y);
+		printf("Timers : delta %d | update %d | render %d\n", m.deltaTime, m.updateTimer, m.renderTimer);
 
 		//Timer handling
 		m.deltaTime = timer(m.deltaTime);
+		m.updateTimer += m.deltaTime;
 		m.renderTimer += m.deltaTime;
 
 		//Filling the events
 		g->status = m_events(g);
 
 		//Updating every M_UPDATE_TIMER ms
-		//m_update(g, &m);
+		if (m.updateTimer >= M_UPDATE_TIMER) {
+			g->status = m_update(g, &m);
+			m.updateTimer = 0;
+		}
 		
 		//Renders every M_RENDER_TIMER ms
 		if (m.renderTimer >= M_RENDER_TIMER) {
