@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "../game/play.h"
 #include "../utils/utils.h"
 
 /*
@@ -24,7 +25,7 @@ int menu_loop(game *g)
 		m.renderTimer += m.deltaTime;
 
 		//Filling the events
-		g->status = m_events(g);
+		g->status = events(g);
 
 		//Updating every M_UPDATE_TIMER ms
 		if (m.updateTimer >= M_UPDATE_TIMER) {
@@ -42,7 +43,7 @@ int menu_loop(game *g)
 		if (g->status == PLAY)
 		{
 			//m_free(&m);
-			//play(g);
+			play_loop(g);
 			//m_init(g, &m);
 		}
 		SDL_Delay(1);

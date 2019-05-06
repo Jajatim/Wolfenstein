@@ -9,14 +9,17 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
+#include <math.h>
 
 #include "../resources/SDL2/SDL.h"
 //Add if else for linux users so it adds : #include <SDL2/SDL.h> instead
 
 /* ***** DEFINES *********************************** */
 #define WIN_NAME "Wolfenstein"
-#define M_UPDATE_TIMER 4
+#define M_UPDATE_TIMER 8
 #define M_RENDER_TIMER 33
+#define P_UPDATE_TIMER 4
+#define P_RENDER_TIMER 16
 
 #define COUNT_OF(ptr) (sizeof(ptr)/sizeof(ptr[0]))
 
@@ -25,9 +28,9 @@
 
 typedef struct error {
 	uint8_t errorCode;
-    char *name;
-    char *description;
-    _Bool isFatal;
+	char *name;
+	char *description;
+	_Bool isFatal;
 	uint8_t type;
 } error_t;
 
@@ -55,13 +58,13 @@ typedef struct keyboard {
 
 typedef struct game {
 	/* SDL & Window infos */
-    SDL_Window *win;
-    SDL_Renderer *ren;
-    uint16_t screenW;
-    uint16_t screenH;
+	SDL_Window *win;
+	SDL_Renderer *ren;
+	uint16_t screenW;
+	uint16_t screenH;
 
 	/* Game general infos */
-    uint8_t status;
+	uint8_t status;
 
 	/* User input */
 	keyboard kbd;

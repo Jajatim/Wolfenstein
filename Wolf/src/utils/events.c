@@ -1,6 +1,6 @@
-#include "menu.h"
+#include "utils.h"
 
-int m_events(game *g)
+int events(game *g)
 {
 	SDL_Event e;
 
@@ -21,13 +21,55 @@ int m_events(game *g)
 				else if (g->status == PLAY)
 					return (PLAY_MENU);
 			}
+
+			if (e.type == SDL_KEYDOWN) {
+				switch(e.key.keysym.sym) {
+					case SDLK_w:
+						g->kbd.w = 1;
+						break;
+					case SDLK_s:
+						g->kbd.s = 1;
+						break;
+					case SDLK_a:
+						g->kbd.a = 1;
+						break;
+					case SDLK_d:
+						g->kbd.d = 1;
+						break;
+					case SDLK_q:
+						g->kbd.q = 1;
+						break;
+					case SDLK_e:
+						g->kbd.e = 1;
+						break;
+				}
+			}
 		}
 
 
 		/* KEY RELEASED */
 		else if (e.type == SDL_KEYUP)
 		{
-
+				switch(e.key.keysym.sym) {
+					case SDLK_w:
+						g->kbd.w = 0;
+						break;
+					case SDLK_s:
+						g->kbd.s = 0;
+						break;
+					case SDLK_a:
+						g->kbd.a = 0;
+						break;
+					case SDLK_d:
+						g->kbd.d = 0;
+						break;
+					case SDLK_q:
+						g->kbd.q = 0;
+						break;
+					case SDLK_e:
+						g->kbd.e = 0;
+						break;
+				}
 		}
 
 

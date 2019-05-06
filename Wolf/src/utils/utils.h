@@ -10,6 +10,11 @@ Relies on SDL_GetTick().
 uint32_t timer(uint32_t deltaTime);
 
 /*
+Events manager
+*/
+int events(game *g);
+
+/*
 Collision detectors.
 */
 int collide_dot_rect(pos2d dot, SDL_Rect rect);
