@@ -2,7 +2,8 @@
 
 int p_engine(game *g, play *p)
 {
-
+	
+	//TEMP MAP LOADING
 	static uint8_t **map = NULL;
 	static map_t *metaMap = NULL;
 
@@ -13,108 +14,129 @@ int p_engine(game *g, play *p)
 		map = metaMap->map;
 	}
 
-	for (int x = 0; x < g->screenW; x++)
-	{
-		double cameraX = 2 * x / (double)g->screenW - 1;
 
-		vec2 ray;
-		ray.x = p->dir.x + p->plane.x * cameraX;
-		ray.y = p->dir.y + p->plane.y * cameraX;
 
-		int mapx = (int)p->pos.x;
-		int mapy = (int)p->pos.y;
 
-		vec2 sidedst;
+	for (int col = 0; col < g->screenW; col++) {
+		//Variable initialisation
 
-		vec2 deltadst;
-		deltadst.x = 1 / ray.x;
-		deltadst.x = (deltadst.x < 0) ? -(deltadst.x) : deltadst.x;
-		deltadst.y = 1 / ray.y;
-		deltadst.y = (deltadst.y < 0) ? -(deltadst.y) : deltadst.y;
+		//x value of the camera : left = -1, center = 0, right = 1
+		const double cameraX = 2.0 * (double)col / (double)g->screenW - 1.0;
 
-		int stepx;
-		int stepy;
+		//Current ray vector
+		vec2 ray = {
+			.x = p->dir.x + p->plane.x * cameraX,
+			.y = p->dir.y + p->plane.y * cameraX
+		};
 
-		int hit = 0;
+		//Current position in the map
+		pos2d mapPos = {
+			.x = (int)p->pos.x,
+			.y = (int)p->pos.y
+		};
+
+		//Full distance between 2 squares
+		vec2 deltaDst;
+
+
+		//Digital Differential Analysis init
+		pos2d stepDir;
+		vec2 curDst;
+
+		//Calc the distance until next map square according to ray vector direction
+		if (ray.x < 0) {
+			stepDir.x = -1;
+			deltaDst.x = 1.0 / -(ray.x);
+			curDst.x = (p->pos.x - mapPos.x) * deltaDst.x;
+		}
+		else {
+			stepDir.x = 1;
+			deltaDst.x = 1.0 / ray.x;
+			curDst.x = (mapPos.x + 1.0 - p->pos.x) * deltaDst.x;
+		}
+		if (ray.y < 0) {
+			stepDir.y = -1;
+			deltaDst.y = 1.0 / -(ray.y);
+			curDst.y = (p->pos.y - mapPos.y) * deltaDst.y;
+		}
+		else {
+			stepDir.y = 1;
+			deltaDst.y = 1.0 / ray.y;
+			curDst.y = (mapPos.y + 1.0 - p->pos.y) * deltaDst.y;
+		}
+
+
+		//Digital Differential Analysis calc
+
+		//Wall hit on North/South (=0) or East/West (=1) side ?
 		int side;
-		double walldst;
 
-		if (ray.x < 0)
+		while (1)
 		{
-			stepx = -1;
-			sidedst.x = (p->pos.x - mapx) * deltadst.x;
-		}
-		else
-		{
-			stepx = 1;
-			sidedst.x = (mapx + 1.0 - p->pos.x) * deltadst.x;
-		}
-		if (ray.y < 0)
-		{
-			stepy = -1;
-			sidedst.y = (p->pos.y - mapy) * deltadst.y;
-		}
-		else
-		{
-			stepy = 1;
-			sidedst.y = (mapy + 1.0 - p->pos.y) * deltadst.y;
-		}
-
-		while (!hit)
-		{
-			if (sidedst.x < sidedst.y)
+			//Checking next step on X or Y depending on the closest
+			if (curDst.x < curDst.y)
 			{
-				sidedst.x += deltadst.x;
-				mapx += stepx;
+				curDst.x += deltaDst.x;
+				mapPos.x += stepDir.x;
 				side = 0;
 			}
 			else
 			{
-				sidedst.y += deltadst.y;
-				mapy += stepy;
+				curDst.y += deltaDst.y;
+				mapPos.y += stepDir.y;
 				side = 1;
 			}
 
-			if (map[mapx][mapy] > 0)
-				hit = 1;
+			//A wall has been hit
+			if (map[mapPos.x][mapPos.y] > 0)
+				break;
 		}
 
+
+		//Wall draw infos
+		const int screenHalfHeight = g->screenH / 2;
+		double wallDst;
 		if (!side)
-			walldst = (mapx - p->pos.x + (1 - stepx) / 2) / ray.x;
+			wallDst = (mapPos.x - p->pos.x + (1 - stepDir.x) / 2) / ray.x;
 		else
-			walldst = (mapy - p->pos.y + (1 - stepy) / 2) / ray.y;
+			wallDst = (mapPos.y - p->pos.y + (1 - stepDir.y) / 2) / ray.y;
 
-		int lineHeight = (int)(g->screenH / walldst);
+		int wallHeight = (int)(g->screenH / wallDst) / 2;
+		int wallStart = screenHalfHeight - wallHeight;
+		int wallEnd = screenHalfHeight + wallHeight;
+		if (wallHeight >= screenHalfHeight) {
+			wallStart = 0;
+			wallEnd = g->screenH;
+		}
 
-		int drawStart = -lineHeight / 2 + g->screenH / 2;
-		if (drawStart < 0)
-			drawStart = 0;
-		int drawEnd = lineHeight / 2 + g->screenH / 2;
-		if (drawEnd >= g->screenH)
-			drawEnd = g->screenH - 1;
+		//Render
+		SDL_Rect drawRect = {
+			.x = col,
+			.y = 0,
+			.w = 1,
+			.h = wallStart
+		};
 
+		//Rendering the sky
+		SDL_SetRenderDrawColor(g->ren, 0, 0, 255, 255);
+		SDL_RenderFillRect(g->ren, &drawRect);
+
+		//Rendering the wall
 		if (side)
-			SDL_SetRenderDrawColor(g->ren,200,200,200,255);
+			SDL_SetRenderDrawColor(g->ren, 200, 200, 200, 255);
 		else
-			SDL_SetRenderDrawColor(g->ren,100,100,100,255);
+			SDL_SetRenderDrawColor(g->ren, 100, 100, 100, 255);
+		drawRect.y = wallStart;
+		drawRect.h = wallEnd - wallStart;
+		SDL_RenderFillRect(g->ren, &drawRect);
 
-		SDL_Rect srcRect;
-		srcRect.x = x;
-		srcRect.y = drawStart;
-		srcRect.h = drawEnd - drawStart;
-		srcRect.w = 1;
-		SDL_RenderFillRect(g->ren,&srcRect);
-
-		srcRect.y = 0;
-		srcRect.h = drawStart;
-		SDL_SetRenderDrawColor(g->ren,0,0,255,255);
-		SDL_RenderFillRect(g->ren,&srcRect);
-
-		srcRect.y = drawEnd;
-		srcRect.h = g->screenH - drawEnd;
-		SDL_SetRenderDrawColor(g->ren,50,50,50,255);
-		SDL_RenderFillRect(g->ren,&srcRect);
+		//Rendering the floor
+		SDL_SetRenderDrawColor(g->ren, 50, 50, 50, 255);
+		drawRect.y = wallEnd;
+		drawRect.h = g->screenH - wallEnd;
+		SDL_RenderFillRect(g->ren, &drawRect);
 	}
 
 	return 1;
 }
+
