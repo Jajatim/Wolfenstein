@@ -1,8 +1,71 @@
 #include "play.h"
 
+static int dda_raycast(play *p, uint8_t **map, pos2d *mapPos, pos2d *stepDir, vec2 *ray)
+{
+	//Current travelled distance
+	vec2 curDst;
+
+	//Distance between two squares on each axis
+	vec2 deltaDst;
+
+	//Digital Differential Analysis init
+	//Sets the step (direction of ray in square units), and sets the distances
+	if (ray->x < 0) {
+		stepDir->x = -1;
+		deltaDst.x = 1.0 / -(ray->x);
+		curDst.x = (p->pos.x - mapPos->x) * deltaDst.x;
+	}
+	else {
+		stepDir->x = 1;
+		deltaDst.x = 1.0 / ray->x;
+		curDst.x = (mapPos->x + 1.0 - p->pos.x) * deltaDst.x;
+	}
+	if (ray->y < 0) {
+		stepDir->y = -1;
+		deltaDst.y = 1.0 / -(ray->y);
+		curDst.y = (p->pos.y - mapPos->y) * deltaDst.y;
+	}
+	else {
+		stepDir->y = 1;
+		deltaDst.y = 1.0 / ray->y;
+		curDst.y = (mapPos->y + 1.0 - p->pos.y) * deltaDst.y;
+	}
+
+
+	//Digital Differential Analysis loop
+	//Moves to the next square (x or y, the closest is always chosen) until a wall is hit
+	//Return the orientation of the wall hit (north/south or east/west)
+
+	int side = 0;
+
+	while (1)
+	{
+		//Checking next step on X or Y depending on the closest
+		if (curDst.x < curDst.y)
+		{
+			curDst.x += deltaDst.x;
+			mapPos->x += stepDir->x;
+			side = 0;
+		}
+		else
+		{
+			curDst.y += deltaDst.y;
+			mapPos->y += stepDir->y;
+			side = 1;
+		}
+
+		//A wall has been hit
+		if (map[mapPos->x][mapPos->y] > 0)
+			return side;
+	}
+
+	//TODO : If code goes here, it is a fatal error
+	return -1;
+}
+
 int p_engine(game *g, play *p)
 {
-	
+
 	//TEMP MAP LOADING
 	static uint8_t **map = NULL;
 	static map_t *metaMap = NULL;
@@ -35,62 +98,13 @@ int p_engine(game *g, play *p)
 			.y = (int)p->pos.y
 		};
 
-		//Full distance between 2 squares
-		vec2 deltaDst;
-
-
-		//Digital Differential Analysis init
+		//Direction of the ray (+1 or -1 on x and y axis)
 		pos2d stepDir;
-		vec2 curDst;
-
-		//Calc the distance until next map square according to ray vector direction
-		if (ray.x < 0) {
-			stepDir.x = -1;
-			deltaDst.x = 1.0 / -(ray.x);
-			curDst.x = (p->pos.x - mapPos.x) * deltaDst.x;
-		}
-		else {
-			stepDir.x = 1;
-			deltaDst.x = 1.0 / ray.x;
-			curDst.x = (mapPos.x + 1.0 - p->pos.x) * deltaDst.x;
-		}
-		if (ray.y < 0) {
-			stepDir.y = -1;
-			deltaDst.y = 1.0 / -(ray.y);
-			curDst.y = (p->pos.y - mapPos.y) * deltaDst.y;
-		}
-		else {
-			stepDir.y = 1;
-			deltaDst.y = 1.0 / ray.y;
-			curDst.y = (mapPos.y + 1.0 - p->pos.y) * deltaDst.y;
-		}
 
 
-		//Digital Differential Analysis calc
-
-		//Wall hit on North/South (=0) or East/West (=1) side ?
-		int side;
-
-		while (1)
-		{
-			//Checking next step on X or Y depending on the closest
-			if (curDst.x < curDst.y)
-			{
-				curDst.x += deltaDst.x;
-				mapPos.x += stepDir.x;
-				side = 0;
-			}
-			else
-			{
-				curDst.y += deltaDst.y;
-				mapPos.y += stepDir.y;
-				side = 1;
-			}
-
-			//A wall has been hit
-			if (map[mapPos.x][mapPos.y] > 0)
-				break;
-		}
+		//Raycater engine
+		//Launching a ray, updating mapPos and returning the side of the wall hit
+		int side = dda_raycast(p, map, &mapPos, &stepDir, &ray);
 
 
 		//Wall draw infos
@@ -108,6 +122,7 @@ int p_engine(game *g, play *p)
 			wallStart = 0;
 			wallEnd = g->screenH;
 		}
+
 
 		//Render
 		SDL_Rect drawRect = {
@@ -139,4 +154,3 @@ int p_engine(game *g, play *p)
 
 	return 1;
 }
-
