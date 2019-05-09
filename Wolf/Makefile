@@ -8,7 +8,7 @@ CFLAGS = -Wall -Wextra
 
 # SOURCES
 SRCDIR =	$(wildcard src/*.c) \
-			$(wildcard src/game/*.c) \
+			$(wildcard src/play/*.c) \
 			$(wildcard src/menu/*.c) \
 			$(wildcard src/utils/*.c)
 #vpath=../src:../src/game

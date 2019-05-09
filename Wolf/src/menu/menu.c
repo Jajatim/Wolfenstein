@@ -1,5 +1,5 @@
 #include "menu.h"
-#include "../game/play.h"
+#include "../play/play.h"
 #include "../utils/utils.h"
 
 /*
