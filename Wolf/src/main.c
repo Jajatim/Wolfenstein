@@ -22,16 +22,18 @@ static void g_exit(game *g)
 	SDL_Quit();
 }
 
-
+int get_cfg(game *g);
 
 static int g_init(game *g)
 {
 	//Variables init
-	g->screenW = 1000; //TODO : Load from config file ?
-	g->screenH = 800; //TODO : Load from config file ?
+	g->screenW = 800; //TODO : Load from config file ?
+	g->screenH = 600; //TODO : Load from config file ?
 	g->status = INIT;
 	g->win = NULL;
 	g->ren = NULL;
+
+	get_cfg(g);
 
 	//Keyboard & mouse init
 	bzero((void *)&(g->kbd), sizeof(keyboard));

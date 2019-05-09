@@ -35,13 +35,19 @@ int play_loop(game *g)
 
 		//In game menu
 		if (g->status == PLAY_MENU) {
-			//TODO
-			printf("ingame menu opening\n");
-			SDL_Delay(500);
-			printf("returning to menu loop\n");
-			g->status = MAIN_MENU;
+			//pm_init();
+			while (g->status == PLAY_MENU) {
+				//pm_update();
+				//pm_render();
+
+				//TODO
+				printf("ingame menu opening\n");
+				SDL_Delay(500);
+				printf("returning to menu loop\n");
+				g->status = MAIN_MENU;
+				SDL_Delay(1);
+			}
 		}
-		SDL_Delay(1);
 	}
 	//p_free(&p);
 	return 1;
