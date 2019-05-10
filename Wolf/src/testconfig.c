@@ -4,6 +4,7 @@
 #define BUFSIZE 1024
 #define CFG_PATH "./config.cfg"
 
+
 static int save_cfg(game *g)
 {
 	//Creates a new file (deletes the current one if there was one)
@@ -27,23 +28,35 @@ static int save_cfg(game *g)
 }
 
 
+char *get_cfg_val(char *s, const char *tag)
+{
+	int tagSize = (int)strlen(tag);
+	if (!strncmp(s, tag, tagSize)) {
+		int i = tagSize;
+		while (s[i] != '=')
+			i++;
+		i++;
+		return &(s[i]);
+	}
+	return NULL;
+}
+
+
 int read_cfg(game *g, FILE *cfg)
 {
+	char *res;
 	char s[BUFSIZE];
+
 	while (fgets(s, BUFSIZE, cfg)) {
-		if (!strncmp(s, "\t00:", 4)) {
-			int i = 4;
-			while (s[i] != '=')
-				i++;
-			i++;
-			g->screenW = atoi(&(s[i]));
+		res = get_cfg_val(s, "\t00:");
+		if (res) {
+			g->screenW = atoi(res);
+			continue;
 		}
-		if (!strncmp(s, "\t01:", 4)) {
-			int i = 4;
-			while (s[i] != '=')
-				i++;
-			i++;
-			g->screenH = atoi(&(s[i]));
+		res = get_cfg_val(s, "\t01:");
+		if (res) {
+			g->screenH = atoi(res);
+			continue;
 		}
 	}
 	return 1;

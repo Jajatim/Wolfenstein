@@ -2,11 +2,13 @@
 #include "../play/play.h"
 #include "../utils/utils.h"
 
-/*
+
 static int m_free(menu *m)
 {
+	SDL_DestroyTexture(m->menuAssets);
+	return 1;
 }
-*/
+
 
 int menu_loop(game *g)
 {
@@ -32,7 +34,7 @@ int menu_loop(game *g)
 			g->status = m_update(g, &m);
 			m.updateTimer = 0;
 		}
-		
+
 		//Renders every M_RENDER_TIMER ms
 		if (m.renderTimer >= M_RENDER_TIMER) {
 			m_render(g, &m);
@@ -42,13 +44,14 @@ int menu_loop(game *g)
 		//Launching the game, exiting the menu
 		if (g->status == PLAY)
 		{
-			//m_free(&m);
+			//m_free(&m); //To delete if menu is light, to do otherwise
 			play_loop(g);
-			//m_init(g, &m);
+			m.m_status = MENU_TITLE;
+			//m_init(g, &m); //To do if m_free() is called before the play loop
 		}
 		SDL_Delay(1);
 	}
-	//m_free(&m);
+	m_free(&m);
 
 	return 1;
 }

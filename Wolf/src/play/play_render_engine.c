@@ -72,7 +72,7 @@ int p_engine(game *g, play *p)
 
 	if (map == NULL)
 	{
-		metaMap = loadMap("maps/test.map");
+		metaMap = loadMap("./binaries/maps/test.map");
 		assert(metaMap != NULL); // TODO : add error
 		map = metaMap->map;
 	}

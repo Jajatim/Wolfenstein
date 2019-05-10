@@ -7,7 +7,15 @@
 #define MENU_BTN_H 50
 #define MENU_BTN_W 100
 
+typedef enum m_status {
+	MENU_TITLE,
+	MENU_OPTIONS
+} menu_status;
+
 typedef struct menu {
+	/* General menu info */
+	menu_status m_status;
+
 	/* Timers */
 	uint32_t deltaTime;
 	uint32_t updateTimer;

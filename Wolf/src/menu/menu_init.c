@@ -4,6 +4,7 @@
 int m_init(game *g, menu *m)
 {
 	//Init variables
+	m->m_status = MENU_TITLE;
 	m->deltaTime = 0;
 	m->updateTimer = 0;
 	m->renderTimer = 0;
