@@ -9,8 +9,15 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
+#include <errno.h>
 #include <math.h>
 #include <assert.h>
+
+#if defined(_WIN32)
+
+#include <windows.h>
+
+#endif
 
 #include "../resources/SDL2/SDL.h"
 #include "map.h"
