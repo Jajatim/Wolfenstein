@@ -53,7 +53,7 @@ static int dda_raycast(play *p, uint8_t **map, pos2d *mapPos, pos2d *stepDir, ve
 			mapPos->y += stepDir->y;
 			side = 1;
 		}
-
+		
 		//A wall has been hit
 		if (map[mapPos->x][mapPos->y] > 0)
 			return side;
@@ -66,6 +66,9 @@ static int dda_raycast(play *p, uint8_t **map, pos2d *mapPos, pos2d *stepDir, ve
 int p_engine(game *g, play *p)
 {
 
+	//LOADING THIS WAY DOES NOT WORK ON WINDOWS
+	//Todo : Fix map loading
+/*
 	//TEMP MAP LOADING
 	static uint8_t **map = NULL;
 	static map_t *metaMap = NULL;
@@ -76,9 +79,20 @@ int p_engine(game *g, play *p)
 		assert(metaMap != NULL); // TODO : add error
 		map = metaMap->map;
 	}
-
-
-
+*/
+	//Temp hardcoded map so tests can be done on Windows - comment and load above if needed
+	uint8_t **map = malloc(sizeof(uint8_t *) * 10);
+	for (int i = 0 ; i < 10 ; i++) {
+		map[i] = malloc(sizeof(uint8_t) * 10);
+		for (int j = 0 ; j < 10 ; j++) {
+			if (i == 0 || i == 9 || j == 0 || j == 9)
+				map[i][j] = 1;
+			else
+				map[i][j] = 0;
+		}
+	}
+	map[2][2] = 1;
+	map[3][2] = 1;
 
 	for (int col = 0; col < g->screenW; col++) {
 		//Variable initialisation
