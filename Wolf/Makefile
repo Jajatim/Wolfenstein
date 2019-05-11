@@ -8,7 +8,7 @@ CFLAGS = -Wall -Wextra
 
 # SOURCES
 SRCDIR =	$(wildcard src/*.c) \
-			$(wildcard src/game/*.c) \
+			$(wildcard src/play/*.c) \
 			$(wildcard src/menu/*.c) \
 			$(wildcard src/utils/*.c)
 #vpath=../src:../src/game
@@ -41,7 +41,7 @@ $(info Compiling for Windows.)
 EXT = .exe
 DEL = del /q
 FixPath = $(subst /,\,$1)
-#LIB = 
+LIB = -Lresources -lmingw32 -lSDL2main -lSDL2
 
 # OS NOT FOUND 
 else
@@ -57,7 +57,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(info Compiling $@...)
-	$(CC) $(call FixPath, $(OBJ)) -o $(call FixPath, $@) $(LIB)
+	$(CC) $(call FixPath, $(OBJ)) -o $(call FixPath, $@) $(call FixPath, $(LIB))
 
 %.o: %.c
 #	$(info Compiling $< into $@)
@@ -67,7 +67,7 @@ clean:
 	$(DEL) $(call FixPath, $(OBJ))
 
 fclean: clean
-	$(DEL) $(NAME)
+	$(DEL) $(call FixPath, $(NAME))
 
 re: fclean all
 

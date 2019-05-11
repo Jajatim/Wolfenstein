@@ -22,7 +22,11 @@ typedef struct play {
 	vec2 plane;
 } play;
 
+
 int play_loop(game *g);
+int p_init(game *g, play *p);
+int p_update(game *g, play *p);
+int p_render(game *g, play *p);
 int p_engine(game *g, play *p);
 
 #endif //PLAY_H_INCLUDED
