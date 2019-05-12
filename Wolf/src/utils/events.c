@@ -26,21 +26,31 @@ int events(game *g)
 				switch(e.key.keysym.sym) {
 					case SDLK_w:
 						g->kbd.w = 1;
+						g->kbd.alpha[22] = 1; //22 is 'w' - 'a'
 						break;
 					case SDLK_s:
 						g->kbd.s = 1;
+						g->kbd.alpha[18] = 1; //18 is 's' - 'a'
 						break;
 					case SDLK_a:
 						g->kbd.a = 1;
+						g->kbd.alpha[0] = 1; //0 is 'a' - 'a'
 						break;
 					case SDLK_d:
 						g->kbd.d = 1;
+						g->kbd.alpha[3] = 1; //3 is 'd' - 'a'
 						break;
 					case SDLK_q:
 						g->kbd.q = 1;
+						g->kbd.alpha[16] = 1; //16 is 'q' - 'a'
 						break;
 					case SDLK_e:
 						g->kbd.e = 1;
+						g->kbd.alpha[4] = 1; //4 is 'e' - 'a'
+						break;
+					case SDLK_z:
+						g->kbd.z = 1;
+						g->kbd.alpha[25] = 1; //25 is 'z' - 'a'
 						break;
 				}
 			}
@@ -53,21 +63,31 @@ int events(game *g)
 				switch(e.key.keysym.sym) {
 					case SDLK_w:
 						g->kbd.w = 0;
+						g->kbd.alpha[22] = 0; //22 is 'w' - 'a'
 						break;
 					case SDLK_s:
 						g->kbd.s = 0;
+						g->kbd.alpha[18] = 0; //18 is 's' - 'a'
 						break;
 					case SDLK_a:
 						g->kbd.a = 0;
+						g->kbd.alpha[0] = 0; //0 is 'a' - 'a'
 						break;
 					case SDLK_d:
 						g->kbd.d = 0;
+						g->kbd.alpha[3] = 0; //3 is 'd' - 'a'
 						break;
 					case SDLK_q:
 						g->kbd.q = 0;
+						g->kbd.alpha[16] = 0; //16 is 'q' - 'a'
 						break;
 					case SDLK_e:
 						g->kbd.e = 0;
+						g->kbd.alpha[4] = 0; //4 is 'e' - 'a'
+						break;
+					case SDLK_z:
+						g->kbd.z = 0;
+						g->kbd.alpha[25] = 0; //25 is 'z' - 'a'
 						break;
 				}
 		}

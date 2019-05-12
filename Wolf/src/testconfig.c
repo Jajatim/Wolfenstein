@@ -17,11 +17,26 @@ static int save_cfg(game *g)
 	//TODO : optimize, but how ?
 	//Fills file with every config info
 	fprintf(cfg,
-			"[VIDEO]\n"						//VIDEO OPTIONS
-			"\t00:SCREEN_WIDTH=%d\n"			//SCREEN WIDTH
-			"\t01:SCREEN_HEIGHT=%d\n"			//SCREEN HEIGHT
+			"[0:VIDEO]\n"						//VIDEO OPTIONS
+			"\t000:SCREEN_WIDTH=%d\n"			//SCREEN_WIDTH
+			"\t001:SCREEN_HEIGHT=%d\n"			//SCREEN_HEIGHT
+			"\n"
 
-			, g->screenW, g->screenH);		//variables
+			"[1:KEYBOARD MAPPING]\n"			//KEYBOARD MAPPING
+			"\t100:MOVE_FORWARD=%c\n"			//MOVE_FORWARD
+			"\t101:MOVE_BACKWARD=%c\n"			//MOVE_BACKWARD
+			"\t102:MOVE_LEFT=%c\n"				//MOVE_LEFT
+			"\t103:MOVE_RIGHT=%c\n"				//MOVE_RIGHT
+			"\t104:TURN_LEFT=%c\n"				//TURN_LEFT
+			"\t105:TURN_RIGHT=%c\n"				//TURN_RIGHT
+
+			//Variables 0:VIDEO
+			, g->screenW, g->screenH
+
+			//Variables 1:KEYBOARD MAPPING
+			, g->actions.moveForward+'a', g->actions.moveBackward+'a', g->actions.moveLeft+'a'
+			, g->actions.moveRight+'a', g->actions.turnLeft+'a', g->actions.turnRight+'a'
+			);
 
 	fclose(cfg);
 	return 1;
@@ -48,14 +63,46 @@ int read_cfg(game *g, FILE *cfg)
 	char s[BUFSIZE];
 
 	while (fgets(s, BUFSIZE, cfg)) {
-		res = get_cfg_val(s, "\t00:");
+		res = get_cfg_val(s, "\t000:");
 		if (res) {
 			g->screenW = atoi(res);
 			continue;
 		}
-		res = get_cfg_val(s, "\t01:");
+		res = get_cfg_val(s, "\t001:");
 		if (res) {
 			g->screenH = atoi(res);
+			continue;
+		}
+
+		
+		res = get_cfg_val(s, "\t100:");
+		if (res) {
+			g->actions.moveForward = res[0] - 'a';
+			continue;
+		}
+		res = get_cfg_val(s, "\t101:");
+		if (res) {
+			g->actions.moveBackward = res[0] - 'a';
+			continue;
+		}
+		res = get_cfg_val(s, "\t102:");
+		if (res) {
+			g->actions.moveLeft = res[0] - 'a';
+			continue;
+		}
+		res = get_cfg_val(s, "\t103:");
+		if (res) {
+			g->actions.moveRight = res[0] - 'a';
+			continue;
+		}
+		res = get_cfg_val(s, "\t104:");
+		if (res) {
+			g->actions.turnLeft = res[0] - 'a';
+			continue;
+		}
+		res = get_cfg_val(s, "\t105:");
+		if (res) {
+			g->actions.turnRight = res[0] - 'a';
 			continue;
 		}
 	}
