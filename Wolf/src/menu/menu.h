@@ -3,7 +3,7 @@
 
 #include "../generic.h"
 
-#define MENU_ASSETS_PATH "../resources/m_assets.bmp"
+#define MENU_ASSETS_PATH "resources/assets/m_assets.bmp"
 #define MENU_BTN_H 50
 #define MENU_BTN_W 100
 

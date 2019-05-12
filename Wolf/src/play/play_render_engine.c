@@ -68,19 +68,19 @@ int p_engine(game *g, play *p)
 
 	//LOADING THIS WAY DOES NOT WORK ON WINDOWS
 	//Todo : Fix map loading
-/*
+
 	//TEMP MAP LOADING
 	static uint8_t **map = NULL;
 	static map_t *metaMap = NULL;
 
 	if (map == NULL)
 	{
-		metaMap = loadMap("./binaries/maps/test.map");
+		metaMap = loadMap("resources/maps/test.map");
 		assert(metaMap != NULL); // TODO : add error
 		map = metaMap->map;
 	}
-*/
-	//Temp hardcoded map so tests can be done on Windows - comment and load above if needed
+/*
+	//Hardcoded map - to delete when map loading is finished
 	uint8_t **map = malloc(sizeof(uint8_t *) * 10);
 	for (int i = 0 ; i < 10 ; i++) {
 		map[i] = malloc(sizeof(uint8_t) * 10);
@@ -93,6 +93,7 @@ int p_engine(game *g, play *p)
 	}
 	map[2][2] = 1;
 	map[3][2] = 1;
+*/
 
 	for (int col = 0; col < g->screenW; col++) {
 		//Variable initialisation

@@ -1,5 +1,5 @@
 # GENERIC
-NAME = binaries/prog$(EXT)
+NAME = prog
 CC = gcc
 CFLAGS = -Wall -Wextra
 
@@ -12,7 +12,7 @@ SRCDIR =	$(wildcard src/*.c) \
 			$(wildcard src/menu/*.c) \
 			$(wildcard src/utils/*.c)
 #vpath=../src:../src/game
-SRC = main.c test.c
+#SRC = main.c test.c
 
 # OBJECTS
 #OBJDIR = src/tmp/
@@ -41,7 +41,8 @@ $(info Compiling for Windows.)
 EXT = .exe
 DEL = del /q
 FixPath = $(subst /,\,$1)
-LIB = -Lresources -lmingw32 -lSDL2main -lSDL2
+SDLPATH = -Iresources/lib
+LIB = -Lresources/lib -lmingw32 -lSDL2main -lSDL2
 
 # OS NOT FOUND 
 else
@@ -61,13 +62,13 @@ $(NAME): $(OBJ)
 
 %.o: %.c
 #	$(info Compiling $< into $@)
-	$(CC) $(CFLAGS) -c $(call FixPath, $<) -o $(call FixPath, $@)
+	$(CC) $(CFLAGS) -c $(call FixPath, $<) -o $(call FixPath, $@) $(call FixPath, $(SDLPATH))
 
 clean:
 	$(DEL) $(call FixPath, $(OBJ))
 
 fclean: clean
-	$(DEL) $(call FixPath, $(NAME))
+	$(DEL) $(call FixPath, $(NAME)$(EXT))
 
 re: fclean all
 
