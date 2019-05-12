@@ -45,7 +45,14 @@ void freeError(game *g)
 void onFatalError(game *g)
 {
 	(void)g;
-    // TODO : Create a dialog box
+    #if defined(_WIN32)
+    int msgboxID = MessageBoxA(
+        NULL,
+        g->err.description,
+        g->err.name,
+        MB_OK
+    );
+    #endif
     exit(EXIT_FAILURE);
 }
 
@@ -62,7 +69,9 @@ void onError(game *g)
         if (g->err.description)
             strcpy(g->err.description,SDL_GetError());
     } else if (g->err.type == ERROR_TYPE_ERRNO){
-        // TODO : add errno support
+        g->err.description = calloc(1, strlen(strerror(errno))+1);
+        if (g->err.description)
+            strcpy(g->err.description,strerror(errno));
     }
     if (getErrorName(g->err) != NULL)
         g->err.name = calloc(1, strlen(getErrorName(g->err))+1);
