@@ -76,7 +76,13 @@ int p_engine(game *g, play *p)
 	if (map == NULL)
 	{
 		metaMap = loadMap("resources/maps/test.map");
-		assert(metaMap != NULL); // TODO : add error
+		if (metaMap == NULL){
+			g->err.errorCode = ERROR_LOADMAP_FAILURE;
+			g->err.type = ERROR_TYPE_ERRNO;
+			g->err.isFatal = true;
+			updateFileInfoError(g, __LINE__, __FILE__);
+			onError(g);
+		}
 		map = metaMap->map;
 	}
 /*

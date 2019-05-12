@@ -33,6 +33,8 @@ typedef struct error {
 	uint8_t errorCode;
 	char *name;
 	char *description;
+	char * fileName;
+	uint16_t fileLine;
 	_Bool isFatal;
 	uint8_t type;
 } error_t;
@@ -107,7 +109,8 @@ enum enum_error {
 	ERROR_WINDOW_INIT_FAILURE,
 	ERROR_RENDERER_INIT_FAILURE,
 	ERROR_LOADBMP_FAILURE,
-	ERROR_LOADTEXTURE_FAILURE
+	ERROR_LOADTEXTURE_FAILURE,
+	ERROR_LOADMAP_FAILURE
 };
 
 enum enum_error_type {

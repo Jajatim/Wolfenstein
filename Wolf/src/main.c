@@ -55,6 +55,7 @@ static int g_init(game *g)
 		g->err.errorCode = ERROR_SDL_INIT_FAILURE;
 		g->err.type = ERROR_TYPE_SDL;
 		g->err.isFatal = true;
+		updateFileInfoError(g, __LINE__, __FILE__);
 		onError(g);
 		return 1;
 	}
@@ -66,6 +67,7 @@ static int g_init(game *g)
 		g->err.errorCode = ERROR_WINDOW_INIT_FAILURE;
 		g->err.type = ERROR_TYPE_SDL;
 		g->err.isFatal = true;
+		updateFileInfoError(g, __LINE__, __FILE__);
 		onError(g);
 		return 1;
 	}
@@ -77,6 +79,7 @@ static int g_init(game *g)
 		g->err.errorCode = ERROR_RENDERER_INIT_FAILURE;
 		g->err.type = ERROR_TYPE_SDL;
 		g->err.isFatal = true;
+		updateFileInfoError(g, __LINE__, __FILE__);
 		onError(g);
 		return 1;
 	}
