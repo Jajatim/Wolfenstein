@@ -45,14 +45,13 @@ void freeError(game *g)
 void onFatalError(game *g)
 {
 	(void)g;
-    #if defined(_WIN32)
-    int msgboxID = MessageBoxA(
-        NULL,
-        g->err.description,
+    
+    int msgboxID = SDL_ShowSimpleMessageBox(
+        SDL_MESSAGEBOX_ERROR,
         g->err.name,
-        MB_OK
+        g->err.description,
+        g->win
     );
-    #endif
     exit(EXIT_FAILURE);
 }
 
