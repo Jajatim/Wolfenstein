@@ -23,7 +23,7 @@ int events(game *g)
 			}
 
 			switch(e.key.keysym.sym) {
-				case a:
+				case SDLK_w:
 					g->kbd.w = 1;
 					g->kbd.alpha[22] = 1; //22 is 'w' - 'a'
 					break;
