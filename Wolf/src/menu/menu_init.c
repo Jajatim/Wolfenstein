@@ -19,6 +19,7 @@ int m_init(game *g, menu *m)
 		g->err.errorCode = ERROR_LOADBMP_FAILURE;
 		g->err.type = ERROR_TYPE_SDL;
 		g->err.isFatal = true;
+		updateFileInfoError(g, __LINE__, __FILE__);
 		onError(g);
 		return 0;
 	}
@@ -28,6 +29,7 @@ int m_init(game *g, menu *m)
 		g->err.errorCode = ERROR_LOADTEXTURE_FAILURE;
 		g->err.type = ERROR_TYPE_SDL;
 		g->err.isFatal = true;
+		updateFileInfoError(g, __LINE__, __FILE__);
 		onError(g);
 		return 0;
 	}

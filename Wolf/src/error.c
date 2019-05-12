@@ -3,11 +3,13 @@
 const char *getErrorName(error_t error)
 {
     const char *errorNames[] = {
-        "undefined error !", // ERROR_UNDEFINED
+        "Undefined error !", // ERROR_UNDEFINED
         "SDL initalisation failed !", // ERROR_SDL_INIT_FAILURE
         "Window initalisation failed !", // ERROR_WINDOW_INIT_FAILURE
         "Renderer initalisation failed !", // ERROR_RENDERER_INIT_FAILURE
-        "error loading an image !", // ERROR_LOADBMP_FAILURE
+        "Error loading an image !", // ERROR_LOADBMP_FAILURE
+        "error while loading a texture !",// ERROR_LOADTEXTURE_FAILURE
+        "error while loading the map !" // ERROR_LOADMAP_FAILURE
     };
     if (error.errorCode < COUNT_OF(errorNames)) {
         return errorNames[error.errorCode];
@@ -25,6 +27,8 @@ const char *getErrorDescription(error_t error)
         NULL, // ERROR_WINDOW_INIT_FAILURE
         NULL, // ERROR_RENDERER_INIT_FAILURE
         NULL, // ERROR_LOADBMP_FAILURE
+        NULL, // ERROR_LOADTEXTURE_FAILURE
+        NULL, // ERROR_LOADMAP_FAILURE
     };
     if (error.errorCode < COUNT_OF(errorDescriptions)) {
         return errorDescriptions[error.errorCode];
@@ -45,11 +49,21 @@ void freeError(game *g)
 void onFatalError(game *g)
 {
 	(void)g;
+
+    char message[2048] = {};
+
+    sprintf(message,
+        "name        : %s\n"
+        "description : %s\n"
+        "error code  : 0x%X\n"
+        "file        : %s\n"
+        "line        : %u\n"
+        , g->err.name, g->err.description, g->err.errorCode, g->err.fileName, g->err.fileLine);
     
-    int msgboxID = SDL_ShowSimpleMessageBox(
+    SDL_ShowSimpleMessageBox(
         SDL_MESSAGEBOX_ERROR,
-        g->err.name,
-        g->err.description,
+        "FATAL ERROR !",
+        message,
         g->win
     );
     exit(EXIT_FAILURE);
@@ -85,4 +99,13 @@ void onError(game *g)
     if (g->err.isFatal) {
         onFatalError(g);
     }
+}
+
+void updateFileInfoError(game *g, uint16_t fileLine, char *fileName){
+    g->err.fileLine = fileLine;
+    if (g->err.fileName != NULL)
+        free(g->err.fileName);
+    g->err.fileName = calloc(1, strlen(fileName)+1);
+    if (g->err.fileName != NULL)
+        strcpy(g->err.fileName, fileName);
 }
