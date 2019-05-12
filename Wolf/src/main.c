@@ -22,6 +22,7 @@ static void g_exit(game *g)
 	SDL_Quit();
 }
 
+//TODO : clean up config loading when done
 int get_cfg(game *g);
 
 static int g_init(game *g)
@@ -33,11 +34,20 @@ static int g_init(game *g)
 	g->win = NULL;
 	g->ren = NULL;
 
+	//actions init - wasd by default
+	g->actions.moveForward = 'w' - 'a';
+	g->actions.moveBackward = 's' - 'a';
+	g->actions.moveLeft = 'q' - 'a';
+	g->actions.moveRight = 'e' - 'a';
+	g->actions.turnLeft = 'a' - 'a';
+	g->actions.turnRight = 'd' - 'a';
+
+	//Get config from file
 	get_cfg(g);
 
 	//Keyboard & mouse init
-	//bzero((void *)&(g->kbd), sizeof(keyboard));
-	//bzero((void *)&(g->mse), sizeof(mouse));
+	memset((void *)&(g->kbd), 0, sizeof(keyboard));
+	memset((void *)&(g->mse), 0, sizeof(mouse));
 
 	//General Init SDL
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0) {

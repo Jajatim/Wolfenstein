@@ -51,13 +51,26 @@ typedef struct mouse {
 } mouse;
 
 typedef struct keyboard {
-	_Bool w;
 	_Bool a;
-	_Bool s;
+	_Bool e;
 	_Bool d;
 	_Bool q;
-	_Bool e;
+	_Bool s;
+	_Bool w;
+	_Bool z;
+
+	//In progress : new keyboard mapping implementation
+	_Bool alpha[26];
 } keyboard;
+
+typedef struct actions {
+	unsigned char moveForward;
+	unsigned char moveBackward;
+	unsigned char moveLeft;
+	unsigned char moveRight;
+	unsigned char turnLeft;
+	unsigned char turnRight;
+} actions;
 
 typedef struct game {
 	/* SDL & Window infos */
@@ -72,6 +85,7 @@ typedef struct game {
 	/* User input */
 	keyboard kbd;
 	mouse mse;
+	actions actions;
 
 	/* Error management */
 	error_t err;
