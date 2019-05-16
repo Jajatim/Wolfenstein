@@ -11,7 +11,12 @@ int play_loop(game *g)
 	while (g->status == PLAY)
 	{
 		//debug
+		/*
 		printf("Play loop (esc to exit)\n");
+		printf("w = %d, s = %d, okup = %d, okback = %d\n", g->kbd.w, g->kbd.s,
+				check_action(g, g->actions.moveForward), check_action(g, g->actions.moveBackward));
+		printf("moveup = %d, moveback = %d\n", g->actions.moveForward, g->actions.moveBackward);
+		*/
 
 		//Timer handling
 		p.deltaTime = timer(p.deltaTime);

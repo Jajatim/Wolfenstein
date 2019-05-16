@@ -29,4 +29,6 @@ int p_update(game *g, play *p);
 int p_render(game *g, play *p);
 int p_engine(game *g, play *p);
 
+int check_action(game *g, int action);
+
 #endif //PLAY_H_INCLUDED

@@ -35,12 +35,12 @@ static int g_init(game *g)
 	g->ren = NULL;
 
 	//actions init - wasd by default
-	g->actions.moveForward = 'w' - 'a';
-	g->actions.moveBackward = 's' - 'a';
-	g->actions.moveLeft = 'q' - 'a';
-	g->actions.moveRight = 'e' - 'a';
-	g->actions.turnLeft = 'a' - 'a';
-	g->actions.turnRight = 'd' - 'a';
+	g->actions.moveForward = SDLK_w;
+	g->actions.moveBackward = SDLK_s;
+	g->actions.moveLeft = SDLK_q;
+	g->actions.moveRight = SDLK_e;
+	g->actions.turnLeft = SDLK_a;
+	g->actions.turnRight = SDLK_d;
 
 	//Get config from file
 	get_cfg(g);

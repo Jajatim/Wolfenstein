@@ -46,8 +46,6 @@ typedef struct pos2d {
 
 typedef struct mouse {
 	pos2d pos;
-	//int x;
-	//int y;
 	_Bool leftBtn;
 	_Bool rightBtn;
 } mouse;
@@ -60,18 +58,15 @@ typedef struct keyboard {
 	_Bool s;
 	_Bool w;
 	_Bool z;
-
-	//In progress : new keyboard mapping implementation
-	_Bool alpha[26];
 } keyboard;
 
 typedef struct actions {
-	unsigned char moveForward;
-	unsigned char moveBackward;
-	unsigned char moveLeft;
-	unsigned char moveRight;
-	unsigned char turnLeft;
-	unsigned char turnRight;
+	int moveForward;
+	int moveBackward;
+	int moveLeft;
+	int moveRight;
+	int turnLeft;
+	int turnRight;
 } actions;
 
 typedef struct game {
