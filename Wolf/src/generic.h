@@ -13,6 +13,10 @@
 #include <math.h>
 #include <assert.h>
 
+#if defined(__unix__)
+#include <signal.h>
+#endif
+
 #include <SDL2/SDL.h>
 #include "map.h"
 //Add if else for linux users so it adds : #include <SDL2/SDL.h> instead
@@ -105,7 +109,8 @@ enum enum_error {
 	ERROR_RENDERER_INIT_FAILURE,
 	ERROR_LOADBMP_FAILURE,
 	ERROR_LOADTEXTURE_FAILURE,
-	ERROR_LOADMAP_FAILURE
+	ERROR_LOADMAP_FAILURE,
+	ERROR_SIGNAL // Unix Only
 };
 
 enum enum_error_type {
@@ -116,6 +121,8 @@ enum enum_error_type {
 
 /* ***** GLOBALS *********************************** */
 //None needed yet, maybe some kind of errno will be needed later
+
+game *getGame(game *toSet);
 
 //#include "main.h" // I put it here because otherwise he tells me he does not know game
 #include "error.h"

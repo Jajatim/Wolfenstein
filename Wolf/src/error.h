@@ -7,5 +7,6 @@ const char *getErrorName(error_t error);
 const char *getErrorDescription(error_t error);
 void onError(game *g);
 void updateFileInfoError(game *g, uint16_t fileLine, char *fileName);
+void setupSignalHandler();
 
 #endif //ERROR_H_INCLUDED

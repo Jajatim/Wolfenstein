@@ -1,5 +1,58 @@
 #include "generic.h"
 
+#if defined(__unix__)
+
+int getSignalNumber(int signal){
+    static int number = -1;
+    if (signal != -1)
+        number = signal;
+    return number;
+}
+
+void sighandler(int signum) {
+    game *g = NULL;
+    g = getGame(NULL);
+    getSignalNumber(signum);
+    int notFatalSignals[] = {
+        SIGINT // unkillable with ^C x)
+    };
+    for (size_t i = 0; i < COUNT_OF(notFatalSignals); i++){
+        if (signum == notFatalSignals[i]){
+            g->err.errorCode = ERROR_SIGNAL;
+            g->err.type = ERROR_TYPE_GAME;
+            g->err.isFatal = false;
+            updateFileInfoError(g, __LINE__, __FILE__);
+            onError(g);
+            return;
+        }
+    }
+    g->err.errorCode = ERROR_SIGNAL;
+    g->err.type = ERROR_TYPE_GAME;
+    g->err.isFatal = true;
+    updateFileInfoError(g, __LINE__, __FILE__);
+    onError(g);
+    return;
+}
+
+void setupSignalHandler(){
+    for (size_t i = 2; i < 32; i++){
+        signal(i, sighandler);
+    }
+    
+}
+
+#else
+
+void setupSignalHandler(){}
+
+int getSignalNumber(int signal){
+    return 0;
+}
+
+void sighandler(int signum) {}
+
+#endif
+
 const char *getErrorName(error_t error)
 {
     const char *errorNames[] = {
@@ -8,8 +61,9 @@ const char *getErrorName(error_t error)
         "Window initalisation failed !", // ERROR_WINDOW_INIT_FAILURE
         "Renderer initalisation failed !", // ERROR_RENDERER_INIT_FAILURE
         "Error loading an image !", // ERROR_LOADBMP_FAILURE
-        "error while loading a texture !",// ERROR_LOADTEXTURE_FAILURE
-        "error while loading the map !" // ERROR_LOADMAP_FAILURE
+        "Error while loading a texture !",// ERROR_LOADTEXTURE_FAILURE
+        "Error while loading the map !", // ERROR_LOADMAP_FAILURE
+        "Detected signal" // ERROR_SIGNAL
     };
     if (error.errorCode < COUNT_OF(errorNames)) {
         return errorNames[error.errorCode];
@@ -29,6 +83,7 @@ const char *getErrorDescription(error_t error)
         NULL, // ERROR_LOADBMP_FAILURE
         NULL, // ERROR_LOADTEXTURE_FAILURE
         NULL, // ERROR_LOADMAP_FAILURE
+        "signal recevied", // ERROR_SIGNAL
     };
     if (error.errorCode < COUNT_OF(errorDescriptions)) {
         return errorDescriptions[error.errorCode];
@@ -52,13 +107,24 @@ void onFatalError(game *g)
 
     char message[2048] = {};
 
-    sprintf(message,
+    if (g->err.errorCode != ERROR_SIGNAL){
+        sprintf(message,
         "name        : %s\n"
         "description : %s\n"
         "error code  : 0x%X\n"
         "file        : %s\n"
         "line        : %u\n"
         , g->err.name, g->err.description, g->err.errorCode, g->err.fileName, g->err.fileLine);
+    } else {
+        sprintf(message,
+        "name        : %s\n"
+        "description : %s ( %d )\n"
+        "error code  : 0x%X\n"
+        "file        : %s\n"
+        "line        : %u\n"
+        , g->err.name, g->err.description, getSignalNumber(-1), g->err.errorCode, g->err.fileName, g->err.fileLine);
+    }
+    
     
     SDL_ShowSimpleMessageBox(
         SDL_MESSAGEBOX_ERROR,

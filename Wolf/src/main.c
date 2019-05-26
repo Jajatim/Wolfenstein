@@ -2,7 +2,13 @@
 #include "menu/menu.h"
 #include "play/play.h"
 
-
+game *getGame(game *toSet){
+	static game *g = NULL;
+	if (toSet != NULL){
+		g = toSet;
+	}
+	return g;
+}
 
 static void g_exit(game *g)
 {
@@ -97,8 +103,11 @@ int main(int argc, char **argv)
 
 	if (g_init(&g))
 		fprintf(stderr, "Error at init\n"); //TODO : gestion err
-	else
+	else {
+		getGame(&g);// set pointer
+		setupSignalHandler();
 		menu_loop(&g);
+	}
 	g_exit(&g);
 
 	return EXIT_SUCCESS;
