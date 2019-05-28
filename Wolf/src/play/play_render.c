@@ -1,10 +1,11 @@
 #include "play.h"
 
-int p_render(game *g, play *p)
+int p_render(game *g, menu *m, play *p)
 {
-	(void)p;
 	(void)g;
-
+	(void)m;
+	(void)p;
+	
 	//Clear renderer
 	SDL_SetRenderDrawColor(g->ren,0,0,0,255);
 	SDL_RenderClear(g->ren);

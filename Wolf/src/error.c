@@ -46,10 +46,13 @@ void setupSignalHandler(){
 void setupSignalHandler(){}
 
 int getSignalNumber(int signal){
+    (void)signal;
     return 0;
 }
 
-void sighandler(int signum) {}
+void sighandler(int signum) {
+    (void)signum;
+}
 
 #endif
 
@@ -111,7 +114,7 @@ void onFatalError(game *g)
         sprintf(message,
         "name        : %s\n"
         "description : %s\n"
-        "error code  : 0x%X\n"
+        "error code  : %#X\n"
         "file        : %s\n"
         "line        : %u\n"
         , g->err.name, g->err.description, g->err.errorCode, g->err.fileName, g->err.fileLine);
@@ -119,7 +122,7 @@ void onFatalError(game *g)
         sprintf(message,
         "name        : %s\n"
         "description : %s ( %d )\n"
-        "error code  : 0x%X\n"
+        "error code  : %#X\n"
         "file        : %s\n"
         "line        : %u\n"
         , g->err.name, g->err.description, getSignalNumber(-1), g->err.errorCode, g->err.fileName, g->err.fileLine);
@@ -157,7 +160,7 @@ void onError(game *g)
     if (g->err.name)
         strcpy(g->err.name,getErrorName(g->err));
     printf("======= New Error =======\n");
-    printf("Error ID : 0x%hhX\n", g->err.errorCode);
+    printf("Error ID : %#X\n", (int)g->err.errorCode); //hhX makes a warning in MinGW
     printf("Error Name : %s\n", g->err.name);
     printf("Error Description : %s\n", g->err.description);
     printf("==========================\n");

@@ -18,8 +18,16 @@
 #endif
 
 #include <SDL2/SDL.h>
+
+
+/* ***** STRUCTS *********************************** */
+#include "generic_struct.h"
+
+
+/* ***** LOCAL INCLUDES *********************************** */
 #include "map.h"
-//Add if else for linux users so it adds : #include <SDL2/SDL.h> instead
+#include "error.h"
+
 
 /* ***** DEFINES *********************************** */
 #define WIN_NAME "Wolfenstein"
@@ -29,68 +37,6 @@
 #define P_RENDER_TIMER 16
 
 #define COUNT_OF(ptr) (sizeof(ptr)/sizeof(ptr[0]))
-
-
-/* ***** STRUCTS *********************************** */
-
-typedef struct error {
-	uint8_t errorCode;
-	char *name;
-	char *description;
-	char * fileName;
-	uint16_t fileLine;
-	_Bool isFatal;
-	uint8_t type;
-} error_t;
-
-typedef struct pos2d {
-	int x;
-	int y;
-} pos2d;
-
-typedef struct mouse {
-	pos2d pos;
-	_Bool leftBtn;
-	_Bool rightBtn;
-} mouse;
-
-typedef struct keyboard {
-	_Bool a;
-	_Bool e;
-	_Bool d;
-	_Bool q;
-	_Bool s;
-	_Bool w;
-	_Bool z;
-} keyboard;
-
-typedef struct actions {
-	int moveForward;
-	int moveBackward;
-	int moveLeft;
-	int moveRight;
-	int turnLeft;
-	int turnRight;
-} actions;
-
-typedef struct game {
-	/* SDL & Window infos */
-	SDL_Window *win;
-	SDL_Renderer *ren;
-	uint16_t screenW;
-	uint16_t screenH;
-
-	/* Game general infos */
-	uint8_t status;
-
-	/* User input */
-	keyboard kbd;
-	mouse mse;
-	actions actions;
-
-	/* Error management */
-	error_t err;
-} game;
 
 
 /* ***** ENUMS *********************************** */
@@ -123,8 +69,5 @@ enum enum_error_type {
 //None needed yet, maybe some kind of errno will be needed later
 
 game *getGame(game *toSet);
-
-//#include "main.h" // I put it here because otherwise he tells me he does not know game
-#include "error.h"
 
 #endif //GENERIC_H_INCLUDED

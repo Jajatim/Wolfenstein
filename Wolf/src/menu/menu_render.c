@@ -7,8 +7,12 @@
  */
 
 //MENU_RENDER_TITLE
-static int m_render_title(game *g, menu *m)
+static int m_render_title(game *g, menu *m, play *p)
 {
+	(void)g;
+	(void)m;
+	(void)p;
+	
 	//TODO : Finalize main menu design so we can finalize btn pos or we can do it the changeable way... (with stuff like : btnNb, etc...)
 
 	//Buttons general infos
@@ -46,8 +50,12 @@ static int m_render_title(game *g, menu *m)
 }
 
 //MENU_RENDER_OPTIONS
-static int m_render_options(game *g, menu *m)
+static int m_render_options(game *g, menu *m, play *p)
 {
+	(void)g;
+	(void)m;
+	(void)p;
+	
 	//TODO : Finalize main menu design so we can finalize btn pos or we can do it the changeable way... (with stuff like : btnNb, etc...)
 
 	//Buttons general infos
@@ -73,18 +81,22 @@ static int m_render_options(game *g, menu *m)
 }
 
 //MENU_RENDER
-int m_render(game *g, menu *m)
+int m_render(game *g, menu *m, play *p)
 {
+	(void)g;
+	(void)m;
+	(void)p;
+	
 	//Clear renderer
 	SDL_SetRenderDrawColor(g->ren,0,0,0,255);
 	SDL_RenderClear(g->ren);
 
 	switch (m->m_status) {
 		case MENU_TITLE:
-			m_render_title(g, m);
+			m_render_title(g, m, p);
 			break;
 		case MENU_OPTIONS:
-			m_render_options(g, m);
+			m_render_options(g, m, p);
 			break;
 		default:
 			//TODO : Error

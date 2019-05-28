@@ -93,20 +93,30 @@ static int g_init(game *g)
 	return 0;
 }
 
-
+//TODO : clean up
+void change_state(game *g, menu *m, play *p); //state changer test
+int game_loop(game *g, menu *m, play *p); //new loop test
 
 int main(int argc, char **argv)
 {
-	argv[0][0] += argc * 0; //Making the compiler happy.
-
+	(void)argc;
+	(void)argv;
+	
 	game g = {};
+	menu m;
+	play p;
 
 	if (g_init(&g))
 		fprintf(stderr, "Error at init\n"); //TODO : gestion err
 	else {
 		getGame(&g);// set pointer
 		setupSignalHandler();
-		menu_loop(&g);
+		//menu_loop(&g);
+		
+		//Starting with main menu
+		g.status = MAIN_MENU;
+		change_state(&g, &m, &p);
+		game_loop(&g, &m, &p);
 	}
 	g_exit(&g);
 

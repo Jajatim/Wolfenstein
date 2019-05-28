@@ -1,21 +1,28 @@
 # Task List
 
-Objective :
+Objective (part 2):
+Well.. Whatever sounds cool !
+
+Objective (part 1):
 Make a Wolfenstein-like game with only the bare essentials.
 The code NEEDS to be clear enough to allow easy addition of new/different features (e.g. Ennemies, Other Textures, Sounds, Levels, etc...)
 This objective will be completed when the game can be played smoothly and the code is readable and easy enough that one feel comfortable adding features.
 Bonus objective : Map generator (either random or manual or both)
 
 
-Current task list :
-- Development environment to create : must allow devs to compile on OSX and Windows.
-- Define project rules : norm, project architecture, etc...
-- Game loop and main game structure : define the game loop as efficiently as possible (hard to modify in the future, think carefully !).
+Current tast list :
+- Add dependencies check (.d files) in the Makefile
+- Move .o files somewhere else (they clutter the directories)
+- Verify and validate config load/save and player actions files
+- Test and confirm game state change
+- Find and easy/efficient way to handle substate change (e.g. from main menu to options menu)
+- Create the option menu and link it to the config file
+- Create the ingame menu
+- Map loading (for now, it is in the render engine)
+- Ctrl+f the TODO tokens int the .c files for more tasks
 
 Future tasks list :
-- Graphic engine
-- Map should be loaded from an external file
-- User controls : wasd and/or arrows (at least. Add mouse ?)
-- Menu Options : should be save and loaded from an external file
 - Skybox
-- HUD (life, points, ammos, etc...)
+- Better looking menu (at least redrawing better assets)
+- Allow different maps to be loaded from inside the game
+- Ingame HUD (life, points, ammos, etc...)

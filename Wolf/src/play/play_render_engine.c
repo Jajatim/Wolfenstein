@@ -68,7 +68,7 @@ int p_engine(game *g, play *p)
 
 	//LOADING THIS WAY DOES NOT WORK ON WINDOWS
 	//Todo : Fix map loading
-
+/*
 	//TEMP MAP LOADING
 	static uint8_t **map = NULL;
 	static map_t *metaMap = NULL;
@@ -85,7 +85,7 @@ int p_engine(game *g, play *p)
 		}
 		map = metaMap->map;
 	}
-/*
+*/
 	//Hardcoded map - to delete when map loading is finished
 	uint8_t **map = malloc(sizeof(uint8_t *) * 10);
 	for (int i = 0 ; i < 10 ; i++) {
@@ -99,7 +99,7 @@ int p_engine(game *g, play *p)
 	}
 	map[2][2] = 1;
 	map[3][2] = 1;
-*/
+
 
 	for (int col = 0; col < g->screenW; col++) {
 		//Variable initialisation

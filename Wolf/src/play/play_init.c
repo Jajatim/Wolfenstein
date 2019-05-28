@@ -1,10 +1,14 @@
 #include "play.h"
 
-int p_init(game *g, play *p)
+int p_init(game *g, menu *m, play *p)
 {
-	(void)p;
 	(void)g;
+	(void)m;
+	(void)p;
 
+	//TODO : add map loading here
+	
+	//Player infos
 	p->moveSpeed = 0.002;
 	p->rotSpeed = 0.002;
 	p->pos = (vec2) {

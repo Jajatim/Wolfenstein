@@ -1,8 +1,11 @@
 #include "menu.h"
-#include "../utils/utils.h"
 
-static int m_update_title(game *g, menu *m)
+static int m_update_title(game *g, menu *m, play *p)
 {
+	(void)g;
+	(void)m;
+	(void)p;
+	
 	//Init btns to default state
 	m->btn_play_src.x = 0;
 	m->btn_opt_src.x = 0;
@@ -19,8 +22,22 @@ static int m_update_title(game *g, menu *m)
 	//Click event
 	if (g->mse.leftBtn) {
 		//Clicked play btn
-		if (collide_dot_rect(g->mse.pos, m->btn_play_dst))
+		if (collide_dot_rect(g->mse.pos, m->btn_play_dst)) {
 			g->status = PLAY;
+
+			//TODO : move to game state change function 
+			//TODO : How to manage state change init function ?
+			g->init = &p_init;
+			p_init(g, m, p); //Needs call cause loop won't return to init state... what to do ?
+
+			g->update = &p_update;
+			g->updateDelta = 0;
+			g->updateTimer = P_UPDATE_TIMER;
+
+			g->render = &p_render;
+			g->renderDelta = 0;
+			g->renderTimer = P_RENDER_TIMER;
+		}
 
 		//Clicked options btn
 		else if (collide_dot_rect(g->mse.pos, m->btn_opt_dst))
@@ -37,8 +54,12 @@ static int m_update_title(game *g, menu *m)
 }
 
 
-static int m_update_options(game *g, menu *m)
+static int m_update_options(game *g, menu *m, play *p)
 {
+	(void)g;
+	(void)m;
+	(void)p;
+	
 	//Init btns to default state
 	m->btn_exit_src.x = 0;
 
@@ -59,14 +80,18 @@ static int m_update_options(game *g, menu *m)
 }
 
 
-int m_update(game *g, menu *m)
+int m_update(game *g, menu *m, play *p)
 {
+	(void)g;
+	(void)m;
+	(void)p;
+	
 	switch (m->m_status) {
 		case MENU_TITLE:
-			g->status = m_update_title(g, m);
+			g->status = m_update_title(g, m, p);
 			break;
 		case MENU_OPTIONS:
-			g->status = m_update_options(g, m);
+			g->status = m_update_options(g, m, p);
 			break;
 		default:
 			//TODO : Error

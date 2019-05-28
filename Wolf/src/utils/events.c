@@ -1,6 +1,6 @@
 #include "utils.h"
 
-int events(game *g)
+void events(game *g)
 {
 	SDL_Event e;
 
@@ -8,19 +8,25 @@ int events(game *g)
 	{
 		/* WINDOW CLOSED */
 		if (e.type == SDL_QUIT)
-			return (EXIT);
+			g->status = EXIT;
 
 
 		/* KEY PRESSED */
 		else if (e.type == SDL_KEYDOWN)
 		{
 			if (e.key.keysym.sym == SDLK_ESCAPE)
+			//TODO temporary goes back to menu when escape is pressed
+				if (g->status == PLAY)
+					g->status = MAIN_MENU;
+			//TODO when adding play menu
+			/*
 			{
 				if (g->status == PLAY_MENU)
-					return (PLAY);
+					g->status = PLAY;
 				else if (g->status == PLAY)
-					return (PLAY_MENU);
+					g->status = PLAY_MENU;
 			}
+			*/
 
 			switch(e.key.keysym.sym) {
 				case SDLK_w:
@@ -108,5 +114,4 @@ int events(game *g)
 			}
 		}
 	}
-	return (g->status);
 }

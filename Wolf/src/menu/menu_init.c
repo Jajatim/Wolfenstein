@@ -1,17 +1,14 @@
 #include "menu.h"
-#include "../utils/utils.h"
 
-int m_init(game *g, menu *m)
+int m_init(game *g, menu *m, play *p)
 {
+	(void)g;
+	(void)m;
+	(void)p;
+	
 	//Init variables
 	m->m_status = MENU_TITLE;
-	m->deltaTime = 0;
-	m->updateTimer = 0;
-	m->renderTimer = 0;
 	m->menuAssets = NULL;
-
-	//Init timer (need to init the static var)
-	timer(m->deltaTime);
 
 	//Loading the assets texture
 	SDL_Surface *tmp = SDL_LoadBMP(MENU_ASSETS_PATH);

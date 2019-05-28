@@ -1,6 +1,7 @@
 #include "utils.h"
 
-uint32_t timer(uint32_t deltaTime) {
+uint32_t timer() {
+    uint32_t deltaTime;
     uint32_t currentTick = SDL_GetTicks();
     static uint32_t lastTick = 0;
 

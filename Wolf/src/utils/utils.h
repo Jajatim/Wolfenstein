@@ -7,12 +7,12 @@
 Returns the time spent since the last call.
 Relies on SDL_GetTick().
 */
-uint32_t timer(uint32_t deltaTime);
+uint32_t timer();
 
 /*
 Events manager
 */
-int events(game *g);
+void events(game *g);
 
 /*
 Collision detectors.
