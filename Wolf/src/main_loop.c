@@ -2,7 +2,7 @@
 #include "play/play.h"
 #include "utils/utils.h"
 
-//TODO : move to appropriate .c file if needed
+//TODO : move to appropriate .c file (if needed)
 void change_state(game *g, menu *m, play *p) {
 	switch(g->status) {
 		case PLAY:
@@ -10,7 +10,6 @@ void change_state(game *g, menu *m, play *p) {
 			m_free(m);
 
 			//Inits play state
-			//g->init = &p_init;
 			p_init(g, m, p);
 
 			//Init timers & functions pointers
@@ -24,10 +23,9 @@ void change_state(game *g, menu *m, play *p) {
 		
 		case MAIN_MENU:
 			//Exits play state
-			//TODO
+			p_free(p);
 
 			//Inits menu state
-			//g->init = &p_init;
 			m_init(g, m, p);
 
 			//Init timers & functions pointers

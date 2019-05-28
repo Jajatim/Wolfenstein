@@ -66,6 +66,12 @@ typedef struct menu {
 	SDL_Rect btn_exit_dst;
 } menu;
 
+typedef struct map {
+    uint8_t version; //TODO : Keep or delete ?
+    uint8_t h;
+    uint8_t w;
+    uint8_t **map;
+} map_t;
 
 typedef struct vec2 {
 	double x;
@@ -79,6 +85,9 @@ typedef struct play {
 	vec2 pos;
 	vec2 dir;
 	vec2 plane;
+
+	/* Map */
+	map_t map;
 } play;
 
 

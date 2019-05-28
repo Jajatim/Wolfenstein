@@ -9,7 +9,7 @@
 #define MENU_BTN_H 50
 #define MENU_BTN_W 100
 
-//int menu_loop(game *g);
+
 int m_init(game *g, menu *m, play *p);
 int m_update(game *g, menu *m, play *p);
 int m_render(game *g, menu *m, play *p);

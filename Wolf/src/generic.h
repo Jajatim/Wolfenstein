@@ -65,9 +65,12 @@ enum enum_error_type {
 	ERROR_TYPE_ERRNO
 };
 
+
 /* ***** GLOBALS *********************************** */
 //None needed yet, maybe some kind of errno will be needed later
 
+
+/* ***** FUNCTIONS *********************************** */
 game *getGame(game *toSet);
 
 #endif //GENERIC_H_INCLUDED

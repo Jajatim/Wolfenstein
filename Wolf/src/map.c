@@ -25,17 +25,17 @@ map_t *loadMap(const char *fileName){
     }
     
     fread(&map->version, sizeof(uint8_t), 1, mapFile);
-    fread(&map->ySize, sizeof(uint8_t), 1, mapFile);
-    fread(&map->xSize, sizeof(uint8_t), 1, mapFile);
+    fread(&map->h, sizeof(uint8_t), 1, mapFile);
+    fread(&map->w, sizeof(uint8_t), 1, mapFile);
 
-    map->map = calloc(map->xSize, sizeof(uint8_t *));
+    map->map = calloc(map->w, sizeof(uint8_t *));
 
-    if (allocateMap(map, map->ySize, map->xSize) == NULL) {
+    if (allocateMap(map, map->h, map->w) == NULL) {
         fclose(mapFile);
     }
 
-    for(size_t i = 0; i < map->xSize; i++){
-        fread(map->map[i], sizeof(uint8_t), map->ySize, mapFile);
+    for(size_t i = 0; i < map->w; i++){
+        fread(map->map[i], sizeof(uint8_t), map->h, mapFile);
     }
     
     fclose(mapFile);
@@ -44,7 +44,7 @@ map_t *loadMap(const char *fileName){
 
 void freeMap(map_t *map){
     if (map->map != NULL) {
-        for(size_t i = 0; i < map->xSize; i++){
+        for(size_t i = 0; i < map->w; i++){
             if (map->map[i] != NULL) {
                 free(map->map[i]);
             }
@@ -63,18 +63,18 @@ map_t *allocateMap(map_t *map, uint8_t ySize, uint8_t xSize){
         }
     }
     
-    map->xSize = xSize;
-    map->ySize = ySize;
+    map->w = xSize;
+    map->h = ySize;
 
-    map->map = calloc(map->xSize, sizeof(uint8_t *));
+    map->map = calloc(map->w, sizeof(uint8_t *));
 
     if (map->map == NULL) {
         freeMap(map);
         return NULL;
     }
     
-    for(size_t i = 0; i < map->xSize; i++){
-        map->map[i] = calloc(map->ySize, sizeof(uint8_t));
+    for(size_t i = 0; i < map->w; i++){
+        map->map[i] = calloc(map->h, sizeof(uint8_t));
         if (map->map[i] == NULL) {
             freeMap(map);
             return NULL;
@@ -96,11 +96,11 @@ _Bool saveMap(const char *fileName, map_t *map){
     }
     
     fwrite(&map->version, sizeof(uint8_t), 1, fileMap);
-    fwrite(&map->ySize, sizeof(uint8_t), 1, fileMap);
-    fwrite(&map->xSize, sizeof(uint8_t), 1, fileMap);
+    fwrite(&map->h, sizeof(uint8_t), 1, fileMap);
+    fwrite(&map->w, sizeof(uint8_t), 1, fileMap);
 
-    for(size_t i = 0; i < map->xSize; i++){
-        fwrite(map->map, sizeof(uint8_t), map->ySize, fileMap);
+    for(size_t i = 0; i < map->w; i++){
+        fwrite(map->map, sizeof(uint8_t), map->h, fileMap);
     }
     
     fclose(fileMap);
