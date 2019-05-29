@@ -6,6 +6,11 @@
  * MENU_RENDER
  */
 
+
+//TODO : remove, this is a test
+#include "../text_test/text.h"
+
+
 //MENU_RENDER_TITLE
 static int m_render_title(game *g, menu *m, play *p)
 {
@@ -45,6 +50,18 @@ static int m_render_title(game *g, menu *m, play *p)
 	m->btn_exit_dst = dst;
 	SDL_RenderCopy(g->ren, m->menuAssets, &(m->btn_exit_src), &dst);
 	curY += midPadding + dst.h;
+
+		
+	//TODO : remove, this is a test
+	//Temp printing of str to test text lib
+	static text_t text = {.textAsset = NULL};
+	if (text.textAsset == NULL)
+		init_text(g, &text);
+	dst.x = 10;
+	dst.y = 10;
+	dst.w = 400;
+	dst.h = 40;
+	print_str(g, &text, "TEST text liB", &dst, 0);
 
 	return 1;
 }

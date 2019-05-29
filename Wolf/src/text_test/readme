@@ -1,0 +1,20 @@
+This is supposed to be some kind of writing library, check .h for functions.
+Work is in progress, do not use until finished (except for testing, obviously).
+
+How allow color changing ?
+For now it is only black (with squares that need to be removed :p), with pink background that is supposed to become invisible.
+Possible solutions : 
+- Creating other images with different colors
+- Creating manually the surface (SDL_DrawPoint or stuff like that)
+- Selecting a certain number of colors and doing only them
+- Setting a fixed and not transparent background (so the color is always readable)
+
+
+Todo list : 
+- Create flags (like centered, aligned left, aligned right, etc...)
+- How to manage height or multilines ? Do we need to ? Fixed height and single line sounds ok...
+- How to manage multi colors ? See above
+- Error when dest is too small ? Or display it anyway ? Or min width ? Many questions...
+- Redraw a better police cause this one sucks
+- See if continuing with .bmp load type or if we switch to a manually drawn texture from a .txt police...
+- Large text will eventually need to be broken and some kind of way to scroll up and down, but let's not thing about it for now...

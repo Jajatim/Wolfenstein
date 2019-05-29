@@ -112,7 +112,7 @@ int main(int argc, char **argv)
 		getGame(&g);// set pointer
 		setupSignalHandler();
 		//menu_loop(&g);
-		
+
 		//Starting with main menu
 		g.status = MAIN_MENU;
 		change_state(&g, &m, &p);
