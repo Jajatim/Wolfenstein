@@ -2,3 +2,4 @@
 .DS_Store
 Wolf/prog
 Wolf/prog.exe
+*.o
